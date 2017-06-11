@@ -1,4 +1,11 @@
 import styles from './app.scss'
-import global from './common/global';
+import { renderElement, addEvent } from './common/global';
+import app from './app';
 
-global();
+function init() {
+  renderElement('app', app());
+}
+
+init();
+
+addEvent(window, 'resize', init);
