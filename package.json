@@ -1,0 +1,27 @@
+{
+  "name": "diverdanger",
+  "version": "1.0.0",
+  "description": "A canvas game about a diver in serious danger",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack/config.js",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesus9ias/diverdanger.git"
+  },
+  "author": "Jesús Escamilla",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jesus9ias/diverdanger/issues"
+  },
+  "homepage": "https://github.com/jesus9ias/diverdanger#readme",
+  "devDependencies": {
+    "css-loader": "^0.28.4",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.5",
+    "style-loader": "^0.18.2",
+    "webpack": "^2.6.1"
+  }
+}
