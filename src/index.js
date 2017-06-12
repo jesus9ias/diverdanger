@@ -1,11 +1,14 @@
 import styles from './app.scss'
-import { renderElement, addEvent } from './common/global';
+import { renderElement } from './common/global';
 import app from './app';
+import startGame from './game';
+import Canvas from './components/canvas';
 
 function init() {
-  renderElement('app', app());
+  renderElement('app', app(), [
+    Canvas,
+    startGame
+  ]);
 }
 
 init();
-
-addEvent(window, 'resize', init);
