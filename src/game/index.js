@@ -23,11 +23,9 @@ function test() {
 
 function bubbleCreator() {
   const currentBubblesLength = game.bubbles.length;
-  console.log(currentBubblesLength);
   const newBubbleName = `bubble_${currentBubblesLength}`;
   const newBubble = Bubble(newBubbleName);
   game.bubbles.push(newBubble);
-  console.log(newBubble.getName());
 }
 
 function bubbleAnimator() {
