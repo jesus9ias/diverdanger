@@ -27,19 +27,30 @@ function drawRectangle({ x, y, width, height }, background) {
 }
 
 function drawWather() {
-  drawRectangle({ x: 0, y: 50, width: 1000, height: window.innerHeight - 50 }, '#3cbff0')
+  drawRectangle({ x: 0, y: 50, width: 1000, height: game.canvas.height - 50 }, '#3cbff0');
 }
 
 function bubbleCreator() {
   const currentBubblesLength = game.bubbles.length;
-  const newBubbleName = `bubble_${currentBubblesLength}`;
-  const newBubble = Bubble(newBubbleName);
-  game.bubbles.push(newBubble);
+  const newBubble = Bubble({ context: game.context });
+  if (newBubble) {
+    game.bubbles.push(newBubble);
+  }
 }
 
 function bubbleAnimator() {
-  game.bubbles.map((bubble) => {
+  clear();
+  drawWather();
+  let toRemove = [];
+  game.bubbles.map((bubble, i) => {
     bubble.move();
+    bubble.draw();
+    if (bubble.x < -10) {
+      toRemove.push(i);
+    }
+  });
+  toRemove.map((a) => {
+    game.bubbles.splice(a, 1);
   });
 }
 
@@ -49,7 +60,7 @@ function cycle() {
   bubbleCreator();
   bubbleAnimator();
 
-  game.cycle =  setInterval(cycle, 500);
+  game.cycle = setInterval(cycle, 10);
 }
 
 function startGame() {
