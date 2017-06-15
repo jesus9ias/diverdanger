@@ -27,7 +27,7 @@ function drawRectangle({ x, y, width, height }, background) {
 }
 
 function drawWather() {
-  drawRectangle({ x: 0, y: 0, width: 100, height: 200 }, '#3cbff0')
+  drawRectangle({ x: 0, y: 50, width: 1000, height: window.innerHeight - 50 }, '#3cbff0')
 }
 
 function bubbleCreator() {
