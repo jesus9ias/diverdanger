@@ -1,9 +1,14 @@
 import { addRef, getRef } from '../common/global';
+import Bubble from './bubble';
+
+const bubbles = () => [];
 
 let game = {
   canvas: null,
-  context: null
-}
+  context: null,
+  cycle: null,
+  bubbles: bubbles()
+};
 
 function clear() {
   game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
@@ -25,13 +30,35 @@ function drawWather() {
   drawRectangle({ x: 0, y: 0, width: 100, height: 200 }, '#3cbff0')
 }
 
+function bubbleCreator() {
+  const currentBubblesLength = game.bubbles.length;
+  const newBubbleName = `bubble_${currentBubblesLength}`;
+  const newBubble = Bubble(newBubbleName);
+  game.bubbles.push(newBubble);
+}
 
+function bubbleAnimator() {
+  game.bubbles.map((bubble) => {
+    bubble.move();
+  });
+}
+
+function cycle() {
+  clearInterval(game.cycle);
+
+  bubbleCreator();
+  bubbleAnimator();
+
+  game.cycle =  setInterval(cycle, 500);
+}
 
 function startGame() {
   game.canvas = addRef('canvas');
   game.context = game.canvas.getContext('2d');
   clear();
   drawWather();
+  test();
+  cycle();
 }
 
 export default startGame;

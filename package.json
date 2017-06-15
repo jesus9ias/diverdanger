@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack/config.js",
+    "dev": "gulp",
     "test": ""
   },
   "repository": {
@@ -23,6 +24,9 @@
     "babel-loader": "^7.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "css-loader": "^0.28.4",
+    "gulp": "^3.9.1",
+    "gulp-webpack": "^1.5.0",
+    "gulp-webserver": "^0.9.1",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.2",
