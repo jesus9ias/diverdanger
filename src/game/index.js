@@ -1,5 +1,6 @@
 import { addRef, getRef } from '../common/global';
 import Bubble from './bubble';
+import Player from './player';
 
 const bubbles = () => [];
 
@@ -7,6 +8,7 @@ let game = {
   canvas: null,
   context: null,
   cycle: null,
+  player: null,
   bubbles: bubbles()
 };
 
@@ -14,16 +16,17 @@ function clear() {
   game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
 }
 
-function test() {
-  game.context.beginPath();
-  game.context.arc(100, 130, 90, 0, 2 * Math.PI, false);
-  game.context.fillStyle = 'red';
-  game.context.fill();
-}
-
 function drawRectangle({ x, y, width, height }, background) {
   game.context.fillStyle = background;
   game.context.fillRect(x, y, width, height);
+}
+
+function drawPlayer() {
+  if (game.player) {
+    game.player.draw();
+  } else {
+    game.player = Player({ context: game.context });
+  }
 }
 
 function drawWather() {
@@ -41,6 +44,7 @@ function bubbleCreator() {
 function bubbleAnimator() {
   clear();
   drawWather();
+  drawPlayer();
   let toRemove = [];
   game.bubbles.map((bubble, i) => {
     bubble.move();
@@ -52,6 +56,7 @@ function bubbleAnimator() {
   toRemove.map((a) => {
     game.bubbles.splice(a, 1);
   });
+  game.player.collision(game.bubbles);
 }
 
 function cycle() {
@@ -63,12 +68,19 @@ function cycle() {
   game.cycle = setInterval(cycle, 10);
 }
 
+document.onkeypress = function(e = window.event) {
+  var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+  if (charCode) {
+    console.log("Character typed: " + charCode);
+  }
+};
+
 function startGame() {
   game.canvas = addRef('canvas');
   game.context = game.canvas.getContext('2d');
   clear();
   drawWather();
-  test();
+  drawPlayer();
   cycle();
 }
 
