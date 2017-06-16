@@ -1,4 +1,4 @@
-import { addRef, getRef } from '../common/global';
+import { addRef, getRef, addEvent } from '../common/global';
 import Bubble from './bubble';
 import Player from './player';
 
@@ -42,13 +42,11 @@ function bubbleCreator() {
 }
 
 function bubbleAnimator() {
-  clear();
-  drawWather();
-  drawPlayer();
   let toRemove = [];
   game.bubbles.map((bubble, i) => {
     bubble.move();
     bubble.draw();
+    bubble.collision(game.player);
     if (bubble.x < -10) {
       toRemove.push(i);
     }
@@ -56,11 +54,14 @@ function bubbleAnimator() {
   toRemove.map((a) => {
     game.bubbles.splice(a, 1);
   });
-  game.player.collision(game.bubbles);
 }
 
 function cycle() {
   clearInterval(game.cycle);
+
+  clear();
+  drawWather();
+  drawPlayer();
 
   bubbleCreator();
   bubbleAnimator();
@@ -68,19 +69,18 @@ function cycle() {
   game.cycle = setInterval(cycle, 10);
 }
 
-document.onkeypress = function(e = window.event) {
+function keyPressed(e = window.event) {
   var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
   if (charCode) {
-    console.log("Character typed: " + charCode);
+    game.player.move(charCode);
   }
-};
+}
+
+addEvent(document, 'keydown', keyPressed);
 
 function startGame() {
   game.canvas = addRef('canvas');
   game.context = game.canvas.getContext('2d');
-  clear();
-  drawWather();
-  drawPlayer();
   cycle();
 }
 

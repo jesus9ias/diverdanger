@@ -6,6 +6,7 @@ class Player extends Drawer {
     this.context = context;
     this.x = 100;
     this.y = 100;
+    this.speed = 10;
   }
 
   draw() {
@@ -21,20 +22,19 @@ class Player extends Drawer {
     });
   }
 
-  move() {
-
-  }
-
-  collision(bubbles) {
-    bubbles.map((bubble) => {
-      if (this.x >= bubble.x
-        && this.x <= bubble.x + (bubble.radius * 2)
-        && this.y >= bubble.y
-        && this.y <= bubble.y + (bubble.radius * 2)
-      ) {
-        console.log('collision!!');
-      }
-    });
+  move(charCode) {
+    if (charCode === 37) {
+      this.x -= this.speed / 3;
+    }
+    if (charCode === 38) {
+      this.y -= this.speed;
+    }
+    if (charCode === 39) {
+      this.x += this.speed;
+    }
+    if (charCode === 40) {
+      this.y += this.speed;
+    }
   }
 }
 

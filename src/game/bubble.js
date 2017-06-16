@@ -26,6 +26,16 @@ class Bubble extends Drawer {
   move() {
     this.x -= this.speed;
   }
+
+  collision(player) {
+    if (player.x >= this.x
+      && player.x <= this.x + (this.radius * 2)
+      && player.y >= this.y
+      && player.y <= this.y + (this.radius * 2)
+    ) {
+      console.log('collision!!');
+    }
+  }
 }
 
 export default (data) => {
