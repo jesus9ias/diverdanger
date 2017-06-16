@@ -33,8 +33,9 @@ class Bubble extends Drawer {
       && player.y >= this.y
       && player.y <= this.y + (this.radius * 2)
     ) {
-      console.log('collision!!');
+      return true;
     }
+    return false;
   }
 }
 

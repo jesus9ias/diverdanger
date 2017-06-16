@@ -6,7 +6,10 @@ class Player extends Drawer {
     this.context = context;
     this.x = 100;
     this.y = 100;
-    this.speed = 10;
+    this.speed = 5;
+    this.life = 1000;
+    this.oxygen = 1000;
+    this.energy = 1000;
   }
 
   draw() {
@@ -22,19 +25,40 @@ class Player extends Drawer {
     });
   }
 
-  move(charCode) {
-    if (charCode === 37) {
+  move(charCodes) {
+    if (charCodes.indexOf(37) > -1
+      && charCodes.length <= 2
+      && this.x >= 0
+    ) {
       this.x -= this.speed / 3;
     }
-    if (charCode === 38) {
+    if (charCodes.indexOf(38) > -1
+      && charCodes.length <= 2
+      && this.y >= 60
+    ) {
       this.y -= this.speed;
     }
-    if (charCode === 39) {
+    if (charCodes.indexOf(39) > -1
+      && charCodes.length <= 2
+      && this.x <= 990
+    ) {
       this.x += this.speed;
     }
-    if (charCode === 40) {
+    if (charCodes.indexOf(40) > -1
+      && charCodes.length <= 2
+      && this.y <= 490
+    ) {
       this.y += this.speed;
     }
+  }
+
+  autoMove(x, y = 0) {
+    this.x += x;
+    this.y += y;
+  }
+
+  setLife(points) {
+    this.life += points;
   }
 }
 

@@ -3,13 +3,16 @@ import Bubble from './bubble';
 import Player from './player';
 
 const bubbles = () => [];
+const pressedKeys = () => [];
 
 let game = {
+  status: 'initial',
   canvas: null,
   context: null,
   cycle: null,
   player: null,
-  bubbles: bubbles()
+  bubbles: bubbles(),
+  pressedKeys: pressedKeys()
 };
 
 function clear() {
@@ -46,7 +49,9 @@ function bubbleAnimator() {
   game.bubbles.map((bubble, i) => {
     bubble.move();
     bubble.draw();
-    bubble.collision(game.player);
+    if(bubble.collision(game.player)) {
+      game.player.setLife(-5);
+    }
     if (bubble.x < -10) {
       toRemove.push(i);
     }
@@ -56,6 +61,38 @@ function bubbleAnimator() {
   });
 }
 
+function playerAnimator() {
+  game.player.autoMove(-0.5, -0.2);
+  if (game.pressedKeys.length > 0) {
+    game.player.move(game.pressedKeys);
+  }
+}
+
+function playerLife() {
+  if (game.player.life <= 0) {
+    game.status = 'stopped';
+  }
+}
+
+function gameChecker() {
+  console.log(game.player.life);
+}
+
+function gamePlaying() {
+  if (game.status === 'playing') {
+    bubbleCreator();
+    bubbleAnimator();
+    playerAnimator();
+    playerLife();
+  }
+}
+
+function gameStopped() {
+  if (game.status === 'stopped') {
+    console.log('stopped');
+  }
+}
+
 function cycle() {
   clearInterval(game.cycle);
 
@@ -63,22 +100,26 @@ function cycle() {
   drawWather();
   drawPlayer();
 
-  bubbleCreator();
-  bubbleAnimator();
+  gameChecker();
+  gamePlaying();
+  gameStopped();
 
   game.cycle = setInterval(cycle, 10);
 }
 
-function keyPressed(e = window.event) {
-  var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-  if (charCode) {
-    game.player.move(charCode);
+addEvent(document, 'keydown', (e = window.event) => {
+  const charCode = (typeof e.which == 'number') ? e.which : e.keyCode;
+  if (game.pressedKeys.indexOf(charCode) === -1) {
+    game.pressedKeys.push(charCode);
   }
-}
+});
 
-addEvent(document, 'keydown', keyPressed);
+addEvent(document, 'keyup', (e = window.event) => {
+  game.pressedKeys = pressedKeys();
+});
 
 function startGame() {
+  game.status = 'playing';
   game.canvas = addRef('canvas');
   game.context = game.canvas.getContext('2d');
   cycle();
