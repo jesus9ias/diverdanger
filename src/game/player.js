@@ -57,6 +57,16 @@ class Player extends Drawer {
     this.y += y;
   }
 
+  outOfPlace() {
+    if (this.x <= 0
+      || this.x >= 990
+      || this.y >= 490
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   setLife(points) {
     this.life += points;
   }

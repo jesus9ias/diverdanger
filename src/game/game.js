@@ -1,12 +1,14 @@
 import { addRef } from '../common/global';
+import Drawer from '../common/drawer';
 import Bubble from './bubble';
 import Player from './player';
 
 const bubbles = () => [];
 const pressedKeys = () => [];
 
-export default class Game {
+export default class Game extends Drawer {
   constructor() {
+    super();
     this.status = 'initial';
     this.canvas = null;
     this.context = null;
@@ -39,11 +41,6 @@ export default class Game {
     this.pressedKeys = pressedKeys();
   }
 
-  drawRectangle({ x, y, width, height }, background) {
-    this.context.fillStyle = background;
-    this.context.fillRect(x, y, width, height);
-  }
-
   drawPlayer() {
     if (this.player) {
       this.player.draw();
@@ -53,7 +50,14 @@ export default class Game {
   }
 
   drawWather() {
-    this.drawRectangle({ x: 0, y: 50, width: 1000, height: this.canvas.height - 50 }, '#3cbff0');
+    this.drawRectangle({
+      context: this.context,
+      x: 0,
+      y: 50,
+      width: 1000,
+      height: this.canvas.height - 50,
+      background: '#3cbff0'
+    });
   }
 
   bubbleCreator() {
@@ -82,9 +86,17 @@ export default class Game {
   }
 
   playerAnimator() {
-    this.player.autoMove(-0.5, -0.2);
+    if (this.player.x >= 0) {
+      this.player.autoMove(-0.5, 0);
+    }
+    if (this.player.y >= 60) {
+      this.player.autoMove(0, -0.2);
+    }
     if (this.pressedKeys.length > 0) {
       this.player.move(this.pressedKeys);
+    }
+    if (this.player.outOfPlace()) {
+      this.player.setLife(-5);
     }
   }
 

@@ -9,4 +9,9 @@ export default class Drawer {
     context.strokeStyle = borderColor;
     context.stroke();
   }
+
+  drawRectangle({ context, x, y, width, height, background }) {
+    context.fillStyle = background;
+    context.fillRect(x, y, width, height);
+  }
 }
