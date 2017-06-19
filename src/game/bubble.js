@@ -17,9 +17,9 @@ class Bubble extends Drawer {
       x,
       y,
       radius,
-      background: 'transparent',
       borderWidth: 1,
-      borderColor: '#ffffff'
+      borderColor: '#ffffff',
+      background: 'transparent'
     });
   }
 
@@ -28,10 +28,31 @@ class Bubble extends Drawer {
   }
 
   collision(player) {
-    if (player.x >= this.x
-      && player.x <= this.x + (this.radius * 2)
-      && player.y >= this.y
-      && player.y <= this.y + (this.radius * 2)
+    const playerWidth = player.x + player.width;
+    const playerHeight = player.y + player.height;
+    const bubbleMinX = this.x - this.radius;
+    const bubbleMaxX = this.x + this.radius;
+    const bubbleMinY = this.y - this.radius;
+    const bubbleMaxY = this.y + this.radius;
+    if (
+      (playerWidth >= bubbleMinX
+      && playerWidth <= bubbleMaxX
+      && playerHeight >= bubbleMinY
+      && playerHeight <= bubbleMaxY)
+    ||
+      (playerWidth >= bubbleMinX
+      && playerWidth <= bubbleMaxX
+      && player.y >= bubbleMinY
+      && player.y <= bubbleMaxY)
+    ||
+      (player.x >= bubbleMinX
+      && player.x <= bubbleMaxX
+      && player.y >= bubbleMinY
+      && player.y <= bubbleMaxY)
+    || (player.x >= bubbleMinX
+      && player.x <= bubbleMaxX
+      && playerHeight >= bubbleMinY
+      && playerHeight <= bubbleMaxY)
     ) {
       return true;
     }

@@ -6,6 +6,8 @@ class Player extends Drawer {
     this.context = context;
     this.x = 100;
     this.y = 100;
+    this.width = 24;
+    this.height = 20;
     this.speed = 5;
     this.life = 1000;
     this.oxygen = 1000;
@@ -13,15 +15,14 @@ class Player extends Drawer {
   }
 
   draw() {
-    const { context, x, y } = this;
-    this.drawCircle({
+    const { context, x, y, width, height } = this;
+    this.drawRectangle({
       context,
       x,
       y,
-      radius: 12,
-      background: 'red',
-      borderWidth: 1,
-      borderColor: 'red'
+      width,
+      height,
+      background: 'red'
     });
   }
 
@@ -34,19 +35,19 @@ class Player extends Drawer {
     }
     if (charCodes.indexOf(38) > -1
       && charCodes.length <= 2
-      && this.y >= 60
+      && this.y >= 50 - (this.height / 2)
     ) {
       this.y -= this.speed;
     }
     if (charCodes.indexOf(39) > -1
       && charCodes.length <= 2
-      && this.x <= 990
+      && this.x <= 1000 - this.width
     ) {
       this.x += this.speed;
     }
     if (charCodes.indexOf(40) > -1
       && charCodes.length <= 2
-      && this.y <= 490
+      && this.y <= 500 - this.height
     ) {
       this.y += this.speed;
     }
@@ -58,9 +59,9 @@ class Player extends Drawer {
   }
 
   outOfPlace() {
-    if (this.x <= 0
-      || this.x >= 990
-      || this.y >= 490
+    if (this.x < 0
+      || this.x > 1000 - this.width
+      || this.y > 500 - this.height
     ) {
       return true;
     }

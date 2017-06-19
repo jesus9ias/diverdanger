@@ -89,7 +89,7 @@ export default class Game extends Drawer {
     if (this.player.x >= 0) {
       this.player.autoMove(-0.5, 0);
     }
-    if (this.player.y >= 60) {
+    if (this.player.y >= 50 - (this.player.height / 2)) {
       this.player.autoMove(0, -0.2);
     }
     if (this.pressedKeys.length > 0) {
