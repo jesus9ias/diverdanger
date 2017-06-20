@@ -1,9 +1,11 @@
 import { addRef } from '../common/global';
 import Drawer from '../common/drawer';
 import Bubble from './bubble';
+import LifeBubble from './lifeBubble';
 import Player from './player';
 
 const bubbles = () => [];
+const lifeBubbles = () => [];
 const pressedKeys = () => [];
 
 export default class Game extends Drawer {
@@ -15,6 +17,7 @@ export default class Game extends Drawer {
     this.cycle = null;
     this.player = null;
     this.bubbles = bubbles();
+    this.lifeBubbles = lifeBubbles();
     this.pressedKeys = pressedKeys();
   }
 
@@ -68,6 +71,14 @@ export default class Game extends Drawer {
     }
   }
 
+  lifeBubbleCreator() {
+    const currentBubblesLength = this.lifeBubbles.length;
+    const newBubble = LifeBubble({ context: this.context });
+    if (newBubble) {
+      this.lifeBubbles.push(newBubble);
+    }
+  }
+
   bubbleAnimator() {
     let toRemove = [];
     this.bubbles.map((bubble, i) => {
@@ -75,6 +86,7 @@ export default class Game extends Drawer {
       bubble.draw();
       if(bubble.collision(this.player)) {
         this.player.setLife(-5);
+        toRemove.push(i);
       }
       if (bubble.x < -10) {
         toRemove.push(i);
@@ -82,6 +94,24 @@ export default class Game extends Drawer {
     });
     toRemove.map((a) => {
       this.bubbles.splice(a, 1);
+    });
+  }
+
+  lifeBubbleAnimator() {
+    let toRemove = [];
+    this.lifeBubbles.map((bubble, i) => {
+      bubble.move();
+      bubble.draw();
+      if(bubble.collision(this.player)) {
+        this.player.setLife(5);
+        toRemove.push(i);
+      }
+      if (bubble.x < -10) {
+        toRemove.push(i);
+      }
+    });
+    toRemove.map((a) => {
+      this.lifeBubbles.splice(a, 1);
     });
   }
 
@@ -121,6 +151,8 @@ export default class Game extends Drawer {
     if (this.status === 'playing') {
       this.bubbleCreator();
       this.bubbleAnimator();
+      this.lifeBubbleCreator();
+      this.lifeBubbleAnimator();
       this.playerAnimator();
       this.playerLife();
     }
