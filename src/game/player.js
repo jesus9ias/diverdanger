@@ -31,25 +31,28 @@ class Player extends Drawer {
       && charCodes.length <= 2
       && this.x >= 0
     ) {
-      this.x -= this.speed;
+      this.x -= this.speed * 1.5;
     }
     if (charCodes.indexOf(38) > -1
       && charCodes.length <= 2
       && this.y >= 50 - (this.height / 2)
     ) {
       this.y -= this.speed;
+      this.setOxygen(-0.3);
     }
     if (charCodes.indexOf(39) > -1
       && charCodes.length <= 2
       && this.x <= 1000 - this.width
     ) {
       this.x += this.speed / 3;
+      this.setOxygen(-0.5);
     }
     if (charCodes.indexOf(40) > -1
       && charCodes.length <= 2
       && this.y <= 500 - this.height
     ) {
       this.y += this.speed;
+      this.setOxygen(-0.3);
     }
   }
 
@@ -70,6 +73,15 @@ class Player extends Drawer {
 
   setLife(points) {
     this.life += points;
+  }
+
+  setOxygen(points) {
+    if (this.oxygen <= 1000) {
+      this.oxygen += points;
+    }
+    if (this.oxygen > 1000) {
+      this.oxygen = 1000;
+    }
   }
 }
 

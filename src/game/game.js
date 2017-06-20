@@ -86,6 +86,12 @@ export default class Game extends Drawer {
   }
 
   playerAnimator() {
+    this.player.setOxygen(-0.2);
+
+    if (this.player.y < 50) {
+      this.player.setOxygen(1.2);
+    }
+
     if (this.player.x >= 0) {
       this.player.autoMove(-0.5, 0);
     }
@@ -101,13 +107,14 @@ export default class Game extends Drawer {
   }
 
   playerLife() {
-    if (this.player.life <= 0) {
+    if (this.player.life <= 0 || this.player.oxygen <= 0) {
       this.status = 'stopped';
     }
   }
 
   gameChecker() {
-    console.log(this.player.life);
+    console.info('oyigen:', this.player.oxygen);
+    console.info('life:', this.player.life);
   }
 
   gamePlaying() {
