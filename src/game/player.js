@@ -31,7 +31,7 @@ class Player extends Drawer {
       && charCodes.length <= 2
       && this.x >= 0
     ) {
-      this.x -= this.speed / 3;
+      this.x -= this.speed;
     }
     if (charCodes.indexOf(38) > -1
       && charCodes.length <= 2
@@ -43,7 +43,7 @@ class Player extends Drawer {
       && charCodes.length <= 2
       && this.x <= 1000 - this.width
     ) {
-      this.x += this.speed;
+      this.x += this.speed / 3;
     }
     if (charCodes.indexOf(40) > -1
       && charCodes.length <= 2

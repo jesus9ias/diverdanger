@@ -34,25 +34,31 @@ class Bubble extends Drawer {
     const bubbleMaxX = this.x + this.radius;
     const bubbleMinY = this.y - this.radius;
     const bubbleMaxY = this.y + this.radius;
-    if (
+    if ( //--bottom right corner
       (playerWidth >= bubbleMinX
       && playerWidth <= bubbleMaxX
       && playerHeight >= bubbleMinY
       && playerHeight <= bubbleMaxY)
-    ||
+    || //--top right corner
       (playerWidth >= bubbleMinX
       && playerWidth <= bubbleMaxX
       && player.y >= bubbleMinY
       && player.y <= bubbleMaxY)
-    ||
+    || //--top left corner
       (player.x >= bubbleMinX
       && player.x <= bubbleMaxX
       && player.y >= bubbleMinY
       && player.y <= bubbleMaxY)
-    || (player.x >= bubbleMinX
+    || // bottom left corner
+      (player.x >= bubbleMinX
       && player.x <= bubbleMaxX
       && playerHeight >= bubbleMinY
       && playerHeight <= bubbleMaxY)
+    || // over
+      (player.x <= bubbleMinX
+      && playerWidth >= bubbleMaxX
+      && player.y <= bubbleMinY
+      && playerHeight >= bubbleMaxY)
     ) {
       return true;
     }
