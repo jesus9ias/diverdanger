@@ -14,4 +14,42 @@ export default class Drawer {
     context.fillStyle = background;
     context.fillRect(x, y, width, height);
   }
+
+  circleCollision(collisioner, objX, objY, objRadius) {
+    const collisionerWidth = collisioner.x + collisioner.width;
+    const collisionerHeight = collisioner.y + collisioner.height;
+    const objMinX = objX - objRadius;
+    const objMaxX = objX + objRadius;
+    const objMinY = objY - objRadius;
+    const objMaxY = objY + objRadius;
+    if ( //--bottom right corner
+      (collisionerWidth >= objMinX
+      && collisionerWidth <= objMaxX
+      && collisionerHeight >= objMinY
+      && collisionerHeight <= objMaxY)
+    || //--top right corner
+      (collisionerWidth >= objMinX
+      && collisionerWidth <= objMaxX
+      && collisioner.y >= objMinY
+      && collisioner.y <= objMaxY)
+    || //--top left corner
+      (collisioner.x >= objMinX
+      && collisioner.x <= objMaxX
+      && collisioner.y >= objMinY
+      && collisioner.y <= objMaxY)
+    || // bottom left corner
+      (collisioner.x >= objMinX
+      && collisioner.x <= objMaxX
+      && collisionerHeight >= objMinY
+      && collisionerHeight <= objMaxY)
+    || // over
+      (collisioner.x <= objMinX
+      && collisionerWidth >= objMaxX
+      && collisioner.y <= objMinY
+      && collisionerHeight >= objMaxY)
+    ) {
+      return true;
+    }
+    return false;
+  }
 }

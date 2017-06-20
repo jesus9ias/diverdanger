@@ -28,41 +28,7 @@ class LifeBubble extends Drawer {
   }
 
   collision(player) {
-    const playerWidth = player.x + player.width;
-    const playerHeight = player.y + player.height;
-    const bubbleMinX = this.x - this.radius;
-    const bubbleMaxX = this.x + this.radius;
-    const bubbleMinY = this.y - this.radius;
-    const bubbleMaxY = this.y + this.radius;
-    if ( //--bottom right corner
-      (playerWidth >= bubbleMinX
-      && playerWidth <= bubbleMaxX
-      && playerHeight >= bubbleMinY
-      && playerHeight <= bubbleMaxY)
-    || //--top right corner
-      (playerWidth >= bubbleMinX
-      && playerWidth <= bubbleMaxX
-      && player.y >= bubbleMinY
-      && player.y <= bubbleMaxY)
-    || //--top left corner
-      (player.x >= bubbleMinX
-      && player.x <= bubbleMaxX
-      && player.y >= bubbleMinY
-      && player.y <= bubbleMaxY)
-    || // bottom left corner
-      (player.x >= bubbleMinX
-      && player.x <= bubbleMaxX
-      && playerHeight >= bubbleMinY
-      && playerHeight <= bubbleMaxY)
-    || // over
-      (player.x <= bubbleMinX
-      && playerWidth >= bubbleMaxX
-      && player.y <= bubbleMinY
-      && playerHeight >= bubbleMaxY)
-    ) {
-      return true;
-    }
-    return false;
+    return this.circleCollision(player, this.x, this.y, this.radius);
   }
 }
 
