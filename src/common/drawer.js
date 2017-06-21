@@ -15,6 +15,10 @@ export default class Drawer {
     context.fillRect(x, y, width, height);
   }
 
+  drawImage({ context, img, sx, sy, swidth, sheight, x, y, width, height }) {
+    context.drawImage(img, sx, sy, swidth, sheight, x, y, width, height);
+  }
+
   circleCollision(collisioner, objX, objY, objRadius) {
     const collisionerWidth = collisioner.x + collisioner.width;
     const collisionerHeight = collisioner.y + collisioner.height;

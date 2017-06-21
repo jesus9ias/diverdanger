@@ -4,25 +4,33 @@ class Player extends Drawer {
   constructor({ context }) {
     super();
     this.context = context;
+    this.sx = 0;
+    this.sy = 0;
     this.x = 100;
     this.y = 100;
-    this.width = 24;
-    this.height = 20;
+    this.width = 36;
+    this.height = 36;
     this.speed = 5;
     this.life = 1000;
     this.oxygen = 1000;
     this.energy = 1000;
+    this.fase = 0;
   }
 
   draw() {
-    const { context, x, y, width, height } = this;
-    this.drawRectangle({
+    const { context, sx, sy, x, y, width, height } = this;
+    const img = document.getElementById("player");
+    this.drawImage({
       context,
+      img,
+      sx,
+      sy,
+      swidth: 256,
+      sheight: 256,
       x,
       y,
       width,
-      height,
-      background: 'red'
+      height
     });
   }
 
@@ -81,6 +89,25 @@ class Player extends Drawer {
     }
     if (this.oxygen > 1000) {
       this.oxygen = 1000;
+    }
+  }
+
+  setAnim() {
+    if (this.fase < 10) { this.sx = 0; this.sy = 0; }
+    if (this.fase < 20 && this.fase >= 10) { this.sx = 256; this.sy = 0; }
+    if (this.fase < 30 && this.fase >= 20) { this.sx = 512; this.sy = 0; }
+    if (this.fase < 40 && this.fase >= 30) { this.sx = 768; this.sy = 0; }
+    if (this.fase < 50 && this.fase >= 40) { this.sx = 0; this.sy = 256; }
+    if (this.fase < 60 && this.fase >= 50) { this.sx = 256; this.sy = 256; }
+    if (this.fase < 70 && this.fase >= 60) { this.sx = 512; this.sy = 256; }
+    if (this.fase < 80 && this.fase >= 70) { this.sx = 768; this.sy = 256; }
+    if (this.fase < 90 && this.fase >= 80) { this.sx = 0; this.sy = 512; }
+    if (this.fase < 100 && this.fase >= 90) { this.sx = 0; this.sy = 768; }
+
+    if (this.fase === 100) {
+      this.fase = 0;
+    } else {
+      this.fase++;
     }
   }
 }

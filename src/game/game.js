@@ -146,6 +146,7 @@ export default class Game extends Drawer {
 
   playerAnimator() {
     this.player.setOxygen(-0.2);
+    this.player.setAnim();
 
     if (this.player.y < 50) {
       this.player.setOxygen(1.2);
