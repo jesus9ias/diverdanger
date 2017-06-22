@@ -12,6 +12,8 @@ const deathBubbles = () => [];
 const shots = () => [];
 const pressedKeys = () => [];
 
+const skorpion_gun = new Audio('dist/assets/audio/ray_gun.mp3');
+
 export default class Game extends Drawer {
   constructor() {
     super();
@@ -97,6 +99,7 @@ export default class Game extends Drawer {
     const currentShotsLength = this.shots.length;
     const newShot = Shot({ context: this.context, player: this.player });
     if (newShot) {
+      skorpion_gun.play();
       this.shots.push(newShot);
     }
   }
