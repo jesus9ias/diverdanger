@@ -30,6 +30,18 @@ class LifeBubble extends Drawer {
   collision(player) {
     return this.circleCollision(player, this.x, this.y, this.radius);
   }
+
+  shotCollision(shots) {
+    let isCollision = false;
+    shots.map((shot, i) => {
+      if (!isCollision) {
+        if (this.circleCollision(shot, this.x, this.y, this.radius)) {
+          isCollision = i;
+        }
+      }
+    });
+    return isCollision;
+  }
 }
 
 export default (data) => {

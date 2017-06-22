@@ -83,6 +83,10 @@ class Player extends Drawer {
     this.life += points;
   }
 
+  setEnergy(points) {
+    this.energy += points;
+  }
+
   setOxygen(points) {
     if (this.oxygen <= 1000) {
       this.oxygen += points;

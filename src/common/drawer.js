@@ -10,9 +10,18 @@ export default class Drawer {
     context.stroke();
   }
 
-  drawRectangle({ context, x, y, width, height, background }) {
+  drawRectangle({ context, x, y, width, height, background, borderWidth, borderColor }) {
+    context.beginPath();
+    context.lineWidth = 0;
+    context.strokeStyle = 'transparent';
+    if (borderWidth) {
+      context.lineWidth = borderWidth;
+      context.strokeStyle = borderColor;
+    }
+    context.rect(x, y, width, height);
     context.fillStyle = background;
-    context.fillRect(x, y, width, height);
+    context.fill();
+    context.stroke();
   }
 
   drawImage({ context, img, sx, sy, swidth, sheight, x, y, width, height }) {
