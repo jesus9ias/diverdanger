@@ -7,7 +7,7 @@ function cycle() {
   clearInterval(game.cycle);
 
   game.clear();
-  game.drawWather();
+  game.drawWater();
   game.drawPlayer();
 
   game.gameChecker();

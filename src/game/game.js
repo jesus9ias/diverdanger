@@ -22,6 +22,7 @@ export default class Game extends Drawer {
     this.context = null;
     this.cycle = null;
     this.player = null;
+    this.waterBorder = 20;
     this.bubbles = bubbles();
     this.lifeBubbles = lifeBubbles();
     this.deathBubbles = deathBubbles();
@@ -56,17 +57,17 @@ export default class Game extends Drawer {
     if (this.player) {
       this.player.draw();
     } else {
-      this.player = Player({ context: this.context });
+      this.player = Player({ context: this.context, waterBorder: this.waterBorder });
     }
   }
 
-  drawWather() {
+  drawWater() {
     this.drawRectangle({
       context: this.context,
       x: 0,
-      y: 50,
+      y: this.waterBorder,
       width: 1000,
-      height: this.canvas.height - 50,
+      height: this.canvas.height - this.waterBorder,
       background: '#3cbff0'
     });
   }
@@ -193,24 +194,26 @@ export default class Game extends Drawer {
 
   playerAnimator() {
     this.player.setOxygen(-0.2);
-    this.player.setAnim();
 
-    if (this.player.y < 50) {
+    if (this.player.y < this.waterBorder) {
       this.player.setOxygen(1.2);
     }
 
     if (this.player.x >= 0) {
       this.player.autoMove(-0.5, 0);
     }
-    if (this.player.y >= 50 - (this.player.height / 2)) {
+    if (this.player.y >= this.waterBorder - (this.player.height / 2)) {
       this.player.autoMove(0, -0.2);
     }
     if (this.pressedKeys.length > 0) {
-      this.player.move(this.pressedKeys);
+      if (this.player.isMoving) {
+        this.player.setAnim();
+      }
+      this.player.move(this.pressedKeys, this.waterBorder);
       if (this.pressedKeys.indexOf(83) > -1) {
         if (this.player.energy >= 5) {
           this.shotCreator();
-          this.player.setEnergy(-5);
+          this.player.setEnergy(-2);
         }
       }
     }

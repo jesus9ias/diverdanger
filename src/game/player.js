@@ -1,13 +1,13 @@
 import Drawer from '../common/drawer';
 
 class Player extends Drawer {
-  constructor({ context }) {
+  constructor({ context, waterBorder }) {
     super();
     this.context = context;
     this.sx = 0;
     this.sy = 0;
     this.x = 100;
-    this.y = 100;
+    this.y = waterBorder + 50;
     this.width = 36;
     this.height = 36;
     this.speed = 5;
@@ -15,6 +15,7 @@ class Player extends Drawer {
     this.oxygen = 1000;
     this.energy = 1000;
     this.fase = 0;
+    this.isMoving = false;
   }
 
   draw() {
@@ -34,7 +35,7 @@ class Player extends Drawer {
     });
   }
 
-  move(charCodes) {
+  move(charCodes, waterBorder) {
     if (charCodes.indexOf(37) > -1
       && charCodes.length <= 2
       && this.x >= 0
@@ -43,7 +44,7 @@ class Player extends Drawer {
     }
     if (charCodes.indexOf(38) > -1
       && charCodes.length <= 2
-      && this.y >= 50 - (this.height / 2)
+      && this.y >= waterBorder - (this.height / 2)
     ) {
       this.y -= this.speed;
       this.setOxygen(-0.3);
@@ -61,6 +62,16 @@ class Player extends Drawer {
     ) {
       this.y += this.speed;
       this.setOxygen(-0.3);
+    }
+
+    if (charCodes.indexOf(37) > -1
+    || charCodes.indexOf(38) > -1
+    || charCodes.indexOf(39) > -1
+    || charCodes.indexOf(40) > -1
+    ) {
+      this.isMoving = true;
+    } else {
+      this.isMoving = false;
     }
   }
 
