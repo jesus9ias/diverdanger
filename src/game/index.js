@@ -1,4 +1,5 @@
 import { addEvent } from '../common/global';
+import * as types from '../common/constants';
 import Game from './game';
 
 const game = new Game();
@@ -14,7 +15,7 @@ function cycle() {
   game.gamePlaying();
   game.gameStopped();
 
-  game.cycle = setInterval(cycle, 10);
+  game.cycle = setInterval(cycle, types.GAME_INTERVAL);
 }
 
 addEvent(document, 'keydown', (e = window.event) => {

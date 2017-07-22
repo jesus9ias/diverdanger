@@ -1,4 +1,5 @@
 import Drawer from '../common/drawer';
+import * as types from '../common/constants';
 
 class Player extends Drawer {
   constructor({ context, waterBorder }) {
@@ -11,9 +12,9 @@ class Player extends Drawer {
     this.width = 36;
     this.height = 36;
     this.speed = 5;
-    this.life = 1000;
-    this.oxygen = 1000;
-    this.energy = 1000;
+    this.life = types.LIFE_INITIAL;
+    this.oxygen = types.OXYGEN_INITIAL;
+    this.energy = types.ENERGY_INITIAL;
     this.fase = 0;
     this.isMoving = false;
   }
@@ -36,38 +37,38 @@ class Player extends Drawer {
   }
 
   move(charCodes, waterBorder) {
-    if (charCodes.indexOf(37) > -1
+    if (charCodes.indexOf(types.KEY_LEFT) > -1
       && charCodes.length <= 2
       && this.x >= 0
     ) {
       this.x -= this.speed * 1.5;
     }
-    if (charCodes.indexOf(38) > -1
+    if (charCodes.indexOf(types.KEY_UP) > -1
       && charCodes.length <= 2
       && this.y >= waterBorder - (this.height / 2)
     ) {
       this.y -= this.speed;
       this.setOxygen(-0.3);
     }
-    if (charCodes.indexOf(39) > -1
+    if (charCodes.indexOf(types.KEY_RIGHT) > -1
       && charCodes.length <= 2
-      && this.x <= 1000 - this.width
+      && this.x <= types.CANVAS_WIDTH - this.width
     ) {
       this.x += this.speed / 3;
       this.setOxygen(-0.5);
     }
-    if (charCodes.indexOf(40) > -1
+    if (charCodes.indexOf(types.KEY_DOWN) > -1
       && charCodes.length <= 2
-      && this.y <= 500 - this.height
+      && this.y <= types.CANVAS_HEIGHT - this.height
     ) {
       this.y += this.speed;
       this.setOxygen(-0.3);
     }
 
-    if (charCodes.indexOf(37) > -1
-    || charCodes.indexOf(38) > -1
-    || charCodes.indexOf(39) > -1
-    || charCodes.indexOf(40) > -1
+    if (charCodes.indexOf(types.KEY_LEFT) > -1
+    || charCodes.indexOf(types.KEY_UP) > -1
+    || charCodes.indexOf(types.KEY_RIGHT) > -1
+    || charCodes.indexOf(types.KEY_DOWN) > -1
     ) {
       this.isMoving = true;
     } else {
@@ -82,8 +83,8 @@ class Player extends Drawer {
 
   outOfPlace() {
     if (this.x < 0
-      || this.x > 1000 - this.width
-      || this.y > 500 - this.height
+      || this.x > types.CANVAS_WIDTH - this.width
+      || this.y > types.CANVAS_HEIGHT - this.height
     ) {
       return true;
     }
@@ -99,11 +100,11 @@ class Player extends Drawer {
   }
 
   setOxygen(points) {
-    if (this.oxygen <= 1000) {
+    if (this.oxygen <= types.OXYGEN_INITIAL) {
       this.oxygen += points;
     }
-    if (this.oxygen > 1000) {
-      this.oxygen = 1000;
+    if (this.oxygen > types.OXYGEN_INITIAL) {
+      this.oxygen = types.OXYGEN_INITIAL;
     }
   }
 

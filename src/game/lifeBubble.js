@@ -1,11 +1,12 @@
 import Drawer from '../common/drawer';
+import * as types from '../common/constants';
 
 class LifeBubble extends Drawer {
   constructor({ context }) {
     super();
     this.context = context;
-    this.x = 1010;
-    this.y = Math.floor(Math.random() * 435) + 55;
+    this.x = types.OBJECT_INIT_X;
+    this.y = Math.floor(Math.random() * types.OBJECT_MAX_Y) + types.OBJECT_MIN_Y;
     this.radius = Math.floor(Math.random() * 2) + 2;
     this.speed = Math.floor(Math.random() * 3) + 1;
   }

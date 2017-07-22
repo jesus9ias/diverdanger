@@ -1,5 +1,6 @@
 import { addRef } from '../common/global';
 import Drawer from '../common/drawer';
+import * as types from '../common/constants';
 import Bubble from './bubble';
 import LifeBubble from './lifeBubble';
 import DeathBubble from './deathBubble';
@@ -22,7 +23,7 @@ export default class Game extends Drawer {
     this.context = null;
     this.cycle = null;
     this.player = null;
-    this.waterBorder = 20;
+    this.waterBorder = types.WATER_BORDER;
     this.bubbles = bubbles();
     this.lifeBubbles = lifeBubbles();
     this.deathBubbles = deathBubbles();
@@ -66,9 +67,9 @@ export default class Game extends Drawer {
       context: this.context,
       x: 0,
       y: this.waterBorder,
-      width: 1000,
+      width: types.CANVAS_WIDTH,
       height: this.canvas.height - this.waterBorder,
-      background: '#3cbff0'
+      background: types.WATER_BACKGROUND
     });
   }
 
@@ -179,7 +180,7 @@ export default class Game extends Drawer {
     this.shots.map((shot, i) => {
       shot.move();
       shot.draw();
-      if (shot.x > 1000) {
+      if (shot.x > types.CANVAS_WIDTH) {
         toRemove.push(i);
       }
     });
@@ -210,7 +211,7 @@ export default class Game extends Drawer {
         this.player.setAnim();
       }
       this.player.move(this.pressedKeys, this.waterBorder);
-      if (this.pressedKeys.indexOf(83) > -1) {
+      if (this.pressedKeys.indexOf(types.KEY_S) > -1) {
         if (this.player.energy >= 5) {
           this.shotCreator();
           this.player.setEnergy(-2);
