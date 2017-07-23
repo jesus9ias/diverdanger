@@ -28,6 +28,12 @@ export default class Drawer {
     context.drawImage(img, sx, sy, swidth, sheight, x, y, width, height);
   }
 
+  drawText({ context, font, color, text, x, y }) {
+    context.font = font;
+    context.fillStyle = color;
+    context.fillText(text, x, y);
+  }
+
   circleCollision(collisioner, objX, objY, objRadius) {
     const collisionerWidth = collisioner.x + collisioner.width;
     const collisionerHeight = collisioner.y + collisioner.height;

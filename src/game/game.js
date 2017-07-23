@@ -22,6 +22,7 @@ export default class Game extends Drawer {
     this.canvas = null;
     this.context = null;
     this.cycle = null;
+    this.lapse = 0;
     this.player = null;
     this.waterBorder = types.WATER_BORDER;
     this.bubbles = bubbles();
@@ -42,6 +43,10 @@ export default class Game extends Drawer {
 
   clear() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  doLapse() {
+    this.lapse++;
   }
 
   onKeyDown(charCode) {
@@ -229,7 +234,29 @@ export default class Game extends Drawer {
     }
   }
 
+  showInfo() {
+    const { context } = this;
+    this.drawRectangle({
+      context,
+      x: 10,
+      y: 440,
+      width: 100,
+      height: 50,
+      background: 'transparent',
+      borderWidth: 3,
+      borderColor: 'red'
+    })
+    const font = '10px Arial'
+    const color = 'blue'
+    const x = 15
+    this.drawText({ context, font, text: `Time: ${this.lapse / 100}`, color, x, y: 450 })
+    this.drawText({ context, font, text: `Oxygen: ${this.player.oxygen.toFixed(2)}`, color, x, y: 461 })
+    this.drawText({ context, font, text: `Life: ${this.player.life}`, color, x, y: 472 })
+    this.drawText({ context, font, text: `Energy: ${this.player.energy}`, color, x, y: 483 })
+  }
+
   gameChecker() {
+    console.info('Time:', this.lapse / 100);
     console.info('Oyigen:', this.player.oxygen);
     console.info('Life:', this.player.life);
     console.info('Energy:', this.player.energy);
@@ -245,6 +272,7 @@ export default class Game extends Drawer {
       this.deathBubbleAnimator();
       //  this.shotCreator();
       this.shotAnimator();
+      this.showInfo();
       this.playerAnimator();
       this.playerLife();
     }

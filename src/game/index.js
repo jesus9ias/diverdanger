@@ -11,8 +11,9 @@ function cycle() {
   game.drawWater();
   game.drawPlayer();
 
-  game.gameChecker();
+  //  game.gameChecker();
   game.gamePlaying();
+  game.doLapse()
   game.gameStopped();
 
   game.cycle = setInterval(cycle, types.GAME_INTERVAL);
