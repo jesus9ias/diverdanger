@@ -224,7 +224,9 @@ export default class Game extends Drawer {
         this.player.setAnim();
       }
       this.player.move(this.pressedKeys, this.waterBorder);
-      if (this.pressedKeys.indexOf(types.KEY_S) > -1) {
+      const shotIndex = this.pressedKeys.indexOf(types.KEY_S)
+      if (shotIndex > -1) {
+        this.pressedKeys.splice(shotIndex, 1);
         if (this.player.energy >= 5) {
           this.shotCreator();
           this.player.setEnergy(-2);
