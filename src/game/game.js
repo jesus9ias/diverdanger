@@ -114,20 +114,22 @@ export default class Game extends Drawer {
   bubbleAnimator() {
     let toRemove = [];
     this.bubbles.map((bubble, i) => {
-      bubble.move();
+      if (this.status === 'playing') {
+        bubble.move();
+        if(bubble.collision(this.player)) {
+          this.player.setLife(-5);
+          toRemove.push(i);
+        }
+        const collision = bubble.shotCollision(this.shots);
+        if(collision) {
+          toRemove.push(i);
+          this.removeShot(collision);
+        }
+        if (bubble.x < -10) {
+          toRemove.push(i);
+        }
+      }
       bubble.draw();
-      if(bubble.collision(this.player)) {
-        this.player.setLife(-5);
-        toRemove.push(i);
-      }
-      const collision = bubble.shotCollision(this.shots);
-      if(collision) {
-        toRemove.push(i);
-        this.removeShot(collision);
-      }
-      if (bubble.x < -10) {
-        toRemove.push(i);
-      }
     });
     toRemove.map((a) => {
       this.bubbles.splice(a, 1);
@@ -137,20 +139,22 @@ export default class Game extends Drawer {
   lifeBubbleAnimator() {
     let toRemove = [];
     this.lifeBubbles.map((bubble, i) => {
-      bubble.move();
+      if (this.status === 'playing') {
+        bubble.move();
+        if(bubble.collision(this.player)) {
+          this.player.setLife(5);
+          toRemove.push(i);
+        }
+        const collision = bubble.shotCollision(this.shots);
+        if(collision) {
+          toRemove.push(i);
+          this.removeShot(collision);
+        }
+        if (bubble.x < -10) {
+          toRemove.push(i);
+        }
+      }
       bubble.draw();
-      if(bubble.collision(this.player)) {
-        this.player.setLife(5);
-        toRemove.push(i);
-      }
-      const collision = bubble.shotCollision(this.shots);
-      if(collision) {
-        toRemove.push(i);
-        this.removeShot(collision);
-      }
-      if (bubble.x < -10) {
-        toRemove.push(i);
-      }
     });
     toRemove.map((a) => {
       this.lifeBubbles.splice(a, 1);
@@ -160,20 +164,22 @@ export default class Game extends Drawer {
   deathBubbleAnimator() {
     let toRemove = [];
     this.deathBubbles.map((bubble, i) => {
-      bubble.move();
+      if (this.status === 'playing') {
+        bubble.move();
+        if(bubble.collision(this.player)) {
+          this.player.setLife(-100);
+          toRemove.push(i);
+        }
+        const collision = bubble.shotCollision(this.shots);
+        if(collision) {
+          toRemove.push(i);
+          this.removeShot(collision);
+        }
+        if (bubble.x < -30) {
+          toRemove.push(i);
+        }
+      }
       bubble.draw();
-      if(bubble.collision(this.player)) {
-        this.player.setLife(-100);
-        toRemove.push(i);
-      }
-      const collision = bubble.shotCollision(this.shots);
-      if(collision) {
-        toRemove.push(i);
-        this.removeShot(collision);
-      }
-      if (bubble.x < -30) {
-        toRemove.push(i);
-      }
     });
     toRemove.map((a) => {
       this.deathBubbles.splice(a, 1);
@@ -183,11 +189,13 @@ export default class Game extends Drawer {
   shotAnimator() {
     let toRemove = [];
     this.shots.map((shot, i) => {
-      shot.move();
-      shot.draw();
-      if (shot.x > types.CANVAS_WIDTH) {
-        toRemove.push(i);
+      if (this.status === 'playing') {
+        shot.move();
+        if (shot.x > types.CANVAS_WIDTH) {
+          toRemove.push(i);
+        }
       }
+      shot.draw();
     });
     toRemove.map((a) => {
       this.shots.splice(a, 1);
@@ -230,7 +238,7 @@ export default class Game extends Drawer {
 
   playerLife() {
     if (this.player.life <= 0 || this.player.oxygen <= 0) {
-      this.status = 'stopped';
+      this.setStatus('stopped');
     }
   }
 
@@ -262,19 +270,53 @@ export default class Game extends Drawer {
     console.info('Energy:', this.player.energy);
   }
 
+  checkForPause() {
+    if (this.pressedKeys.indexOf(types.KEY_P) > -1) {
+      this.pressedKeys = pressedKeys();
+      if (this.status === 'playing') {
+        this.setStatus('paused');
+        return null;
+      }
+      if (this.status === 'paused') {
+        this.setStatus('playing');
+        return null;
+      }
+    }
+  }
+
+  checkForStart() {
+    if (this.pressedKeys.indexOf(types.KEY_I) > -1 && this.status === 'initial') {
+      this.pressedKeys = pressedKeys();
+      this.setStatus('playing');
+    }
+  }
+
   gamePlaying() {
     if (this.status === 'playing') {
+      this.doLapse();
       this.bubbleCreator();
       this.bubbleAnimator();
       this.lifeBubbleCreator();
       this.lifeBubbleAnimator();
       this.deathBubbleCreator();
       this.deathBubbleAnimator();
-      //  this.shotCreator();
       this.shotAnimator();
       this.showInfo();
       this.playerAnimator();
       this.playerLife();
+    }
+    if (this.status === 'paused') {
+      this.bubbleAnimator();
+      this.lifeBubbleAnimator();
+      this.deathBubbleAnimator();
+      this.shotAnimator();
+      this.showInfo();
+    }
+    if (this.status === 'paused' || this.status === 'playing') {
+      this.checkForPause()
+    }
+    if (this.status === 'initial') {
+      this.checkForStart()
     }
   }
 

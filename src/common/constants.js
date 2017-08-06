@@ -6,6 +6,8 @@ export const KEY_UP = 38;
 export const KEY_RIGHT = 39;
 export const KEY_DOWN = 40;
 
+export const KEY_I = 73;
+export const KEY_P = 80;
 export const KEY_S = 83;
 
 export const CANVAS_WIDTH = 1000;

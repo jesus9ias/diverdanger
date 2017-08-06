@@ -11,9 +11,7 @@ function cycle() {
   game.drawWater();
   game.drawPlayer();
 
-  //  game.gameChecker();
   game.gamePlaying();
-  game.doLapse()
   game.gameStopped();
 
   game.cycle = setInterval(cycle, types.GAME_INTERVAL);
@@ -29,7 +27,6 @@ addEvent(document, 'keyup', () => {
 });
 
 function startGame() {
-  game.setStatus('playing');
   game.initialize();
   cycle();
 }
