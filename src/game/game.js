@@ -18,7 +18,11 @@ const skorpion_gun = new Audio('dist/assets/audio/ray_gun.mp3');
 export default class Game extends Drawer {
   constructor() {
     super();
-    this.status = 'initial';
+    this.startValues();
+    this.setStatus('initial');
+  }
+
+  startValues() {
     this.canvas = null;
     this.context = null;
     this.cycle = null;
@@ -293,6 +297,15 @@ export default class Game extends Drawer {
     }
   }
 
+  checkForRestarting() {
+    if (this.pressedKeys.indexOf(types.KEY_R) > -1 && this.status === 'stopped') {
+      this.pressedKeys = pressedKeys();
+      this.startValues();
+      this.initialize();
+      this.setStatus('playing');
+    }
+  }
+
   gamePlaying() {
     if (this.status === 'playing') {
       this.doLapse();
@@ -319,6 +332,9 @@ export default class Game extends Drawer {
     }
     if (this.status === 'initial') {
       this.checkForStart()
+    }
+    if (this.status === 'stopped') {
+      this.checkForRestarting()
     }
   }
 
