@@ -20,7 +20,7 @@ class LifeBubble extends Drawer {
       radius,
       borderWidth: 1,
       borderColor: 'red',
-      background: 'transparent'
+      background: 'red'
     });
   }
 

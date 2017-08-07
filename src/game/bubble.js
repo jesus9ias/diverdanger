@@ -19,8 +19,8 @@ class Bubble extends Drawer {
       y,
       radius,
       borderWidth: 1,
-      borderColor: '#ffffff',
-      background: 'transparent'
+      borderColor: 'black',
+      background: 'white'
     });
   }
 

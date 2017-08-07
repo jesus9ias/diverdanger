@@ -20,7 +20,7 @@ class DeathBubble extends Drawer {
       radius,
       borderWidth: 1,
       borderColor: 'black',
-      background: 'transparent'
+      background: 'black'
     });
   }
 
