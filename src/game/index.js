@@ -11,6 +11,7 @@ function cycle() {
   game.drawWater();
   game.drawPlayer();
 
+  game.gameIniting();
   game.gamePlaying();
   game.gameStopped();
 

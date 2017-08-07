@@ -263,10 +263,10 @@ export default class Game extends Drawer {
     const font = '10px Arial'
     const color = 'blue'
     const x = 15
-    this.drawText({ context, font, text: `Time: ${this.lapse / 100}`, color, x, y: 450 })
+    this.drawText({ context, font, text: `Time: ${this.lapse / 100}`, color, x, y: 450 });
     this.drawText({ context, font, text: `Oxygen: ${this.player.oxygen.toFixed(2)}`, color, x, y: 461 })
-    this.drawText({ context, font, text: `Life: ${this.player.life}`, color, x, y: 472 })
-    this.drawText({ context, font, text: `Energy: ${this.player.energy}`, color, x, y: 483 })
+    this.drawText({ context, font, text: `Life: ${this.player.life}`, color, x, y: 472 });
+    this.drawText({ context, font, text: `Energy: ${this.player.energy}`, color, x, y: 483 });
   }
 
   gameChecker() {
@@ -338,9 +338,45 @@ export default class Game extends Drawer {
     }
   }
 
+  gameIniting() {
+    const { context } = this;
+    if (this.status === 'initial') {
+      this.drawRectangle({
+        context,
+        x: 350,
+        y: 190,
+        width: 300,
+        height: 100,
+        background: 'transparent',
+        borderWidth: 10,
+        borderColor: 'red'
+      });
+      const font = '20px Arial';
+      const color = 'blue';
+      const x = 390;
+      const y = 245;
+      this.drawText({ context, font, text: 'Press i to start the game', color, x, y });
+    }
+  }
+
   gameStopped() {
+    const { context } = this;
     if (this.status === 'stopped') {
-      console.log('stopped');
+      this.drawRectangle({
+        context,
+        x: 350,
+        y: 190,
+        width: 300,
+        height: 100,
+        background: 'transparent',
+        borderWidth: 10,
+        borderColor: 'red'
+      });
+      const font = '20px Arial';
+      const color = 'blue';
+      const x = 360;
+      const y = 245;
+      this.drawText({ context, font, text: 'Game ended, Press r to restart', color, x, y });
     }
   }
 }
