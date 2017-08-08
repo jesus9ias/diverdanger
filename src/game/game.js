@@ -82,6 +82,20 @@ export default class Game extends Drawer {
     });
   }
 
+  waterBottom() {
+    const { context } = this;
+    this.drawRectangle({
+      context,
+      x: 0,
+      y: 495,
+      width: 1000,
+      height: 5,
+      background: 'brown',
+      borderWidth: 0,
+      borderColor: ''
+    })
+  }
+
   bubbleCreator() {
     const currentBubblesLength = this.bubbles.length;
     const newBubble = Bubble({ context: this.context });
@@ -309,6 +323,7 @@ export default class Game extends Drawer {
   gamePlaying() {
     if (this.status === 'playing') {
       this.doLapse();
+      this.waterBottom();
       this.bubbleCreator();
       this.bubbleAnimator();
       this.lifeBubbleCreator();
