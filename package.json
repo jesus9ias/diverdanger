@@ -4,8 +4,9 @@
   "description": "A canvas game about a diver in serious danger",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack/config.js",
+    "build": "webpack --config webpack/prod.js && npm run assets",
     "dev": "gulp",
+    "assets": "gulp assets",
     "test": ""
   },
   "repository": {
@@ -27,6 +28,7 @@
     "gulp": "^3.9.1",
     "gulp-webpack": "^1.5.0",
     "gulp-webserver": "^0.9.1",
+    "image-webpack-loader": "^3.4.2",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.2",
