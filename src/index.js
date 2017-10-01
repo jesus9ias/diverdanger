@@ -1,4 +1,4 @@
-import styles from './index.scss'
+import styles from './dev.scss'
 import { renderElement } from './common/global';
 import app from './app';
 import startGame from './game';

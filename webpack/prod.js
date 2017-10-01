@@ -1,9 +1,18 @@
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
     entry: "./src/index.js",
     output: {
-        path: __dirname,
-        filename: "../dist/js/bundle.js"
+        path: __dirname + '/dist',
+        filename: "../../dist/js/bundle.js"
     },
+    plugins: [
+      new HtmlWebpackPlugin({
+        filename: '../../dist/index.html',
+        template: './index.html',
+        inject: false
+      })
+    ],
     watch: false,
     module: {
         rules: [{
