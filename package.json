@@ -4,9 +4,11 @@
   "description": "A canvas game about a diver in serious danger",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack/prod.js && npm run assets",
+    "prod": "npm run sass:prod && npm run assets:prod && webpack --config webpack/prod.js",
     "dev": "gulp",
-    "assets": "gulp assets",
+    "sass:prod": "gulp sass:prod",
+    "assets:dev": "gulp assets:dev",
+    "assets:prod": "gulp assets:prod",
     "test": ""
   },
   "repository": {
@@ -26,6 +28,8 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "css-loader": "^0.28.4",
     "gulp": "^3.9.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-sass": "^3.1.0",
     "gulp-webpack": "^1.5.0",
     "gulp-webserver": "^0.9.1",
     "html-webpack-plugin": "^2.30.1",

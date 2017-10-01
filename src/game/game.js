@@ -13,7 +13,7 @@ const deathBubbles = () => [];
 const shots = () => [];
 const pressedKeys = () => [];
 
-const skorpion_gun = new Audio('dist/assets/audio/ray_gun.mp3');
+const skorpion_gun = new Audio('./assets/audio/ray_gun.mp3');
 
 export default class Game extends Drawer {
   constructor() {

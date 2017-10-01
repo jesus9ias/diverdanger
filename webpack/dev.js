@@ -1,9 +1,18 @@
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
     entry: "./src/index.js",
     output: {
-        path: __dirname,
-        filename: "../dist/js/bundle.js"
+        path: __dirname + '/dist',
+        filename: "../../dist/dev/js/bundle.js"
     },
+    plugins: [
+      new HtmlWebpackPlugin({
+        filename: '../../dist/dev/index.html',
+        template: './src/views/dev.html',
+        inject: false
+      })
+    ],
     watch: true,
     module: {
         rules: [{
@@ -12,16 +21,6 @@ module.exports = {
             use: [{
                 loader: "babel-loader"
             }]
-          }, {
-            test: /\.scss$/,
-            exclude: /node_modules/,
-            use: [{
-                loader: "style-loader" // creates style nodes from JS strings
-            }, {
-                loader: "css-loader" // translates CSS into CommonJS
-            }, {
-                loader: "sass-loader" // compiles Sass to CSS
-            }]
-        }]
+          }]
     }
 };

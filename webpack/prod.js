@@ -4,12 +4,12 @@ module.exports = {
     entry: "./src/index.js",
     output: {
         path: __dirname + '/dist',
-        filename: "../../dist/js/bundle.js"
+        filename: "../../dist/prod/js/bundle.js"
     },
     plugins: [
       new HtmlWebpackPlugin({
-        filename: '../../dist/index.html',
-        template: './index.html',
+        filename: '../../dist/prod/index.html',
+        template: './src/views/prod.html',
         inject: false
       })
     ],
@@ -21,17 +21,7 @@ module.exports = {
             use: [{
                 loader: "babel-loader"
             }]
-          }, {
-            test: /\.scss$/,
-            exclude: /node_modules/,
-            use: [{
-                loader: "style-loader" // creates style nodes from JS strings
-            }, {
-                loader: "css-loader" // translates CSS into CommonJS
-            }, {
-                loader: "sass-loader" // compiles Sass to CSS
-            }]
-        },{
+          },{
           test: /\.(jpe?g|png|gif|svg)$/i,
           loaders: [
               'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
