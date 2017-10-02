@@ -48,4 +48,4 @@ gulp.task('assets:prod', function() {
   .pipe(gulp.dest('dist/prod/assets/'));
 });
 
-gulp.task('default', ['build', 'sass:dev', 'webserver']);
+gulp.task('default', ['sass:dev']);

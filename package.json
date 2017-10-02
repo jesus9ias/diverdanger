@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prod": "npm run sass:prod && npm run assets:prod && webpack --config webpack/prod.js",
-    "dev": "gulp",
+    "dev": "gulp && node webpack/dev.server.js",
     "sass:prod": "gulp sass:prod",
     "assets:dev": "gulp assets:dev",
     "assets:prod": "gulp assets:prod",
@@ -37,6 +37,11 @@
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.2",
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1"
+  },
+  "dependencies": {
+    "express": "^4.16.1"
   }
 }
