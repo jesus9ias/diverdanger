@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prod": "npm run sass:prod && npm run assets:prod && webpack --config webpack/prod.js",
-    "dev": "gulp && node webpack/dev.server.js",
+    "dev": "gulp && webpack --config webpack/dev.js && node webpack/dev.server.js",
     "sass:prod": "gulp sass:prod",
     "assets:dev": "gulp assets:dev",
     "assets:prod": "gulp assets:prod",
