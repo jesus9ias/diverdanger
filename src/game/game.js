@@ -272,10 +272,10 @@ export default class Game extends Drawer {
       height: 50,
       background: 'transparent',
       borderWidth: 3,
-      borderColor: 'red'
+      borderColor: '#1f364d'
     })
     const font = '10px Arial'
-    const color = 'blue'
+    const color = 'white'
     const x = 15
     this.drawText({ context, font, text: `Time: ${this.lapse / 100}`, color, x, y: 450 });
     this.drawText({ context, font, text: `Oxygen: ${this.player.oxygen.toFixed(2)}`, color, x, y: 461 })
@@ -364,10 +364,10 @@ export default class Game extends Drawer {
         height: 100,
         background: 'transparent',
         borderWidth: 10,
-        borderColor: 'red'
+        borderColor: '#1f364d'
       });
       const font = '20px Arial';
-      const color = 'blue';
+      const color = 'white';
       const x = 390;
       const y = 245;
       this.drawText({ context, font, text: 'Press i to start the game', color, x, y });
@@ -385,10 +385,10 @@ export default class Game extends Drawer {
         height: 100,
         background: 'transparent',
         borderWidth: 10,
-        borderColor: 'red'
+        borderColor: '#a20d37'
       });
       const font = '20px Arial';
-      const color = 'blue';
+      const color = 'white';
       const x = 360;
       const y = 245;
       this.drawText({ context, font, text: 'Game ended, Press r to restart', color, x, y });
