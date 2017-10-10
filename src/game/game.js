@@ -7,6 +7,9 @@ import DeathBubble from './deathBubble';
 import Shot from './shot';
 import Player from './player';
 
+import { renderElement } from '../common/global';
+import Scores from '../components/scores';
+
 const bubbles = () => [];
 const lifeBubbles = () => [];
 const deathBubbles = () => [];
@@ -20,6 +23,7 @@ export default class Game extends Drawer {
     super();
     this.startValues();
     this.setStatus('initial');
+    this.showedSocores = 0;
   }
 
   startValues() {
@@ -370,6 +374,8 @@ export default class Game extends Drawer {
       const color = 'white';
       const x = 390;
       const y = 245;
+      this.showedSocores = 0;
+      renderElement('dialogs', '');
       this.drawText({ context, font, text: 'Press i to start the game', color, x, y });
     }
   }
@@ -392,6 +398,11 @@ export default class Game extends Drawer {
       const x = 360;
       const y = 245;
       this.drawText({ context, font, text: 'Game ended, Press r to restart', color, x, y });
+      if (this.showedSocores === 0) {
+        console.log(this.showedSocores);
+        Scores();
+        this.showedSocores = 1;
+      }
     }
   }
 }

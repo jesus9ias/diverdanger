@@ -19,6 +19,12 @@ export const renderElement = (element, html, callbacks) => {
   makeCallbacks(callbacks);
 };
 
+export const appendElement = (element, html, callbacks) => {
+  const el = document.getElementById(element);
+  el.innerHTML += html;
+  makeCallbacks(callbacks);
+};
+
 export const addEvent = (element, event, func) => {
   element.addEventListener(event, func);
 };
