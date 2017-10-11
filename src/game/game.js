@@ -317,6 +317,8 @@ export default class Game extends Drawer {
 
   checkForRestarting() {
     if (this.pressedKeys.indexOf(types.KEY_R) > -1 && this.status === 'stopped') {
+      this.showedSocores = 0;
+      renderElement('dialogs', '');
       this.pressedKeys = pressedKeys();
       this.startValues();
       this.initialize();
