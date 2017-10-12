@@ -402,7 +402,8 @@ export default class Game extends Drawer {
       this.drawText({ context, font, text: 'Game ended, Press r to restart', color, x, y });
       if (this.showedSocores === 0) {
         console.log(this.showedSocores);
-        Scores();
+        const seconds = this.lapse / 100;
+        Scores(seconds, this.player.oxygen, this.player.life, this.player.energy);
         this.showedSocores = 1;
       }
     }

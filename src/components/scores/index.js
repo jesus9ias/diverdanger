@@ -1,7 +1,14 @@
 import { appendElement } from '../../common/global';
 
-const Scores = () => {
-  appendElement('dialogs', '<div id="scores" class="scores">scores</div>');
+const Scores = (seconds, oxygen, life, energy) => {
+  appendElement('dialogs', `<div id="scores" class="scores">
+    <h2>Scores</h2>
+    <p>Seconds: ${seconds}</p>
+    <p>Oxygen: ${oxygen.toFixed(2)}</p>
+    <p>Life: ${life}</p>
+    <p>Energy: ${energy}</p>
+    <p>Press r to restart</p>
+  </div>`);
 };
 
 export default Scores;
