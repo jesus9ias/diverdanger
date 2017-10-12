@@ -1,8 +1,9 @@
 import { appendElement } from '../../common/global';
 
-const Scores = (seconds, oxygen, life, energy, points) => {
+const Scores = (seconds, oxygen, life, energy, points, level) => {
   appendElement('dialogs', `<div id="scores" class="scores">
     <h2>Scores</h2>
+    <p>Reached Level: ${level}</p>
     <p>Points: ${points}</p>
     <p>Game time: ${seconds}</p>
     <p>Oxygen: ${oxygen.toFixed(2)}</p>

@@ -23,7 +23,6 @@ export default class Game extends Drawer {
     super();
     this.startValues();
     this.setStatus('initial');
-    this.showedSocores = 0;
   }
 
   startValues() {
@@ -32,6 +31,8 @@ export default class Game extends Drawer {
     this.cycle = null;
     this.lapse = 0;
     this.player = null;
+    this.showedSocores = 0;
+    this.level = 1;
     this.waterBorder = types.WATER_BORDER;
     this.bubbles = bubbles();
     this.lifeBubbles = lifeBubbles();
@@ -98,6 +99,16 @@ export default class Game extends Drawer {
       borderWidth: 0,
       borderColor: ''
     })
+  }
+
+  checkLevel() {
+    if (this.level === 1 && this.player.points >= 100) {
+      this.setLevel(2);
+    }
+  }
+
+  setLevel(level) {
+    this.level = level;
   }
 
   bubbleCreator() {
@@ -332,6 +343,7 @@ export default class Game extends Drawer {
   gamePlaying() {
     if (this.status === 'playing') {
       this.doLapse();
+      this.checkLevel();
       this.waterBottom();
       this.bubbleCreator();
       this.bubbleAnimator();
@@ -406,7 +418,7 @@ export default class Game extends Drawer {
       if (this.showedSocores === 0) {
         console.log(this.showedSocores);
         const seconds = this.lapse / 100;
-        Scores(seconds, this.player.oxygen, this.player.life, this.player.energy, this.player.points);
+        Scores(seconds, this.player.oxygen, this.player.life, this.player.energy, this.player.points, this.level);
         this.showedSocores = 1;
       }
     }
