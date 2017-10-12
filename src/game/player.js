@@ -12,6 +12,7 @@ class Player extends Drawer {
     this.width = 36;
     this.height = 36;
     this.speed = 5;
+    this.points = 0;
     this.life = types.LIFE_INITIAL;
     this.oxygen = types.OXYGEN_INITIAL;
     this.energy = types.ENERGY_INITIAL;
@@ -106,6 +107,10 @@ class Player extends Drawer {
     if (this.oxygen > types.OXYGEN_INITIAL) {
       this.oxygen = types.OXYGEN_INITIAL;
     }
+  }
+
+  setPoints(points) {
+    this.points += points;
   }
 
   setAnim() {

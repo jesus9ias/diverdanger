@@ -146,6 +146,7 @@ export default class Game extends Drawer {
         if(collision) {
           toRemove.push(i);
           this.removeShot(collision);
+          this.player.setPoints(5);
         }
         if (bubble.x < -10) {
           toRemove.push(i);
@@ -171,6 +172,7 @@ export default class Game extends Drawer {
         if(collision) {
           toRemove.push(i);
           this.removeShot(collision);
+          this.player.setPoints(-5);
         }
         if (bubble.x < -10) {
           toRemove.push(i);
@@ -196,6 +198,7 @@ export default class Game extends Drawer {
         if(collision) {
           toRemove.push(i);
           this.removeShot(collision);
+          this.player.setPoints(10);
         }
         if (bubble.x < -30) {
           toRemove.push(i);
@@ -403,7 +406,7 @@ export default class Game extends Drawer {
       if (this.showedSocores === 0) {
         console.log(this.showedSocores);
         const seconds = this.lapse / 100;
-        Scores(seconds, this.player.oxygen, this.player.life, this.player.energy);
+        Scores(seconds, this.player.oxygen, this.player.life, this.player.energy, this.player.points);
         this.showedSocores = 1;
       }
     }
