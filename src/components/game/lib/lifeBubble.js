@@ -1,5 +1,5 @@
-import Drawer from '../common/drawer';
-import * as types from '../common/constants';
+import Drawer from './drawer';
+import * as types from'../../../common/constants';
 
 class LifeBubble extends Drawer {
   constructor({ context }) {
@@ -34,6 +34,7 @@ class LifeBubble extends Drawer {
 
   shotCollision(shots) {
     let isCollision = false;
+    // eslint-disable-next-line
     shots.map((shot, i) => {
       if (!isCollision) {
         if (this.circleCollision(shot, this.x, this.y, this.radius)) {

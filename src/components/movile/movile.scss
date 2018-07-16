@@ -1,14 +1,16 @@
+@import "../../common/general.scss";
 
-.movile__block {
+.movile {
   background: white;
   padding: 10px;
   max-width: 300px;
   margin: 0px auto;
+  &__message {
+    color: black;
+    font-family: Arial;
+    font-size: 16px;
+    text-align: center;
+  }
 }
 
-.movile__message {
-  color: black;
-  font-family: Arial;
-  font-size: 16px;
-  text-align: center;
-}
+

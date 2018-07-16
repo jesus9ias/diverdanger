@@ -1,14 +1,12 @@
-import { addRef } from '../common/global';
-import Drawer from '../common/drawer';
-import * as types from '../common/constants';
+import { addRef } from '../../../common/global';
+import Drawer from './drawer';
+import * as types from'../../../common/constants';
 import Bubble from './bubble';
 import LifeBubble from './lifeBubble';
 import DeathBubble from './deathBubble';
 import Shot from './shot';
 import Player from './player';
-
-import { renderElement } from '../common/global';
-import Scores from '../components/scores';
+import ray_gun from '../../../assets/audio/ray_gun.mp3';
 
 const bubbles = () => [];
 const lifeBubbles = () => [];
@@ -16,7 +14,7 @@ const deathBubbles = () => [];
 const shots = () => [];
 const pressedKeys = () => [];
 
-const skorpion_gun = new Audio('./assets/audio/ray_gun.mp3');
+const skorpion_gun = new Audio(ray_gun);
 
 export default class Game extends Drawer {
   constructor() {
@@ -112,7 +110,7 @@ export default class Game extends Drawer {
   }
 
   bubbleCreator() {
-    const currentBubblesLength = this.bubbles.length;
+    //  const currentBubblesLength = this.bubbles.length;
     const newBubble = Bubble({ context: this.context });
     if (newBubble) {
       this.bubbles.push(newBubble);
@@ -120,7 +118,7 @@ export default class Game extends Drawer {
   }
 
   lifeBubbleCreator() {
-    const currentBubblesLength = this.lifeBubbles.length;
+    //  const currentBubblesLength = this.lifeBubbles.length;
     const newBubble = LifeBubble({ context: this.context });
     if (newBubble) {
       this.lifeBubbles.push(newBubble);
@@ -128,7 +126,7 @@ export default class Game extends Drawer {
   }
 
   deathBubbleCreator() {
-    const currentBubblesLength = this.deathBubbles.length;
+    //  const currentBubblesLength = this.deathBubbles.length;
     const newBubble = DeathBubble({ context: this.context });
     if (newBubble) {
       this.deathBubbles.push(newBubble);
@@ -136,7 +134,7 @@ export default class Game extends Drawer {
   }
 
   shotCreator() {
-    const currentShotsLength = this.shots.length;
+    //  const currentShotsLength = this.shots.length;
     const newShot = Shot({ context: this.context, player: this.player });
     if (newShot) {
       skorpion_gun.play();
@@ -146,6 +144,7 @@ export default class Game extends Drawer {
 
   bubbleAnimator() {
     let toRemove = [];
+    // eslint-disable-next-line
     this.bubbles.map((bubble, i) => {
       if (this.status === 'playing') {
         bubble.move();
@@ -165,6 +164,7 @@ export default class Game extends Drawer {
       }
       bubble.draw();
     });
+    // eslint-disable-next-line
     toRemove.map((a) => {
       this.bubbles.splice(a, 1);
     });
@@ -172,6 +172,7 @@ export default class Game extends Drawer {
 
   lifeBubbleAnimator() {
     let toRemove = [];
+    // eslint-disable-next-line
     this.lifeBubbles.map((bubble, i) => {
       if (this.status === 'playing') {
         bubble.move();
@@ -191,6 +192,7 @@ export default class Game extends Drawer {
       }
       bubble.draw();
     });
+    // eslint-disable-next-line
     toRemove.map((a) => {
       this.lifeBubbles.splice(a, 1);
     });
@@ -198,6 +200,7 @@ export default class Game extends Drawer {
 
   deathBubbleAnimator() {
     let toRemove = [];
+    // eslint-disable-next-line
     this.deathBubbles.map((bubble, i) => {
       if (this.status === 'playing') {
         bubble.move();
@@ -217,6 +220,7 @@ export default class Game extends Drawer {
       }
       bubble.draw();
     });
+    // eslint-disable-next-line
     toRemove.map((a) => {
       this.deathBubbles.splice(a, 1);
     });
@@ -224,6 +228,7 @@ export default class Game extends Drawer {
 
   shotAnimator() {
     let toRemove = [];
+    // eslint-disable-next-line
     this.shots.map((shot, i) => {
       if (this.status === 'playing') {
         shot.move();
@@ -233,6 +238,7 @@ export default class Game extends Drawer {
       }
       shot.draw();
     });
+    // eslint-disable-next-line
     toRemove.map((a) => {
       this.shots.splice(a, 1);
     });
@@ -332,7 +338,7 @@ export default class Game extends Drawer {
   checkForRestarting() {
     if (this.pressedKeys.indexOf(types.KEY_R) > -1 && this.status === 'stopped') {
       this.showedSocores = 0;
-      renderElement('dialogs', '');
+      //  renderElement('dialogs', '');
       this.pressedKeys = pressedKeys();
       this.startValues();
       this.initialize();
@@ -392,7 +398,7 @@ export default class Game extends Drawer {
       const x = 390;
       const y = 245;
       this.showedSocores = 0;
-      renderElement('dialogs', '');
+      //  renderElement('dialogs', '');
       this.drawText({ context, font, text: 'Press i to start the game', color, x, y });
     }
   }
@@ -417,8 +423,8 @@ export default class Game extends Drawer {
       this.drawText({ context, font, text: 'Game ended, Press r to restart', color, x, y });
       if (this.showedSocores === 0) {
         console.log(this.showedSocores);
-        const seconds = this.lapse / 100;
-        Scores(seconds, this.player.oxygen, this.player.life, this.player.energy, this.player.points, this.level);
+        //  const seconds = this.lapse / 100;
+        //  Scores(seconds, this.player.oxygen, this.player.life, this.player.energy, this.player.points, this.level);
         this.showedSocores = 1;
       }
     }

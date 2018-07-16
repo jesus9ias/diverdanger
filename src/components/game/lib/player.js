@@ -1,5 +1,5 @@
-import Drawer from '../common/drawer';
-import * as types from '../common/constants';
+import Drawer from './drawer';
+import * as types from'../../../common/constants';
 
 class Player extends Drawer {
   constructor({ context, waterBorder }) {

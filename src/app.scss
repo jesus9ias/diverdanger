@@ -1,9 +1,16 @@
+@import "common/general.scss";
 
 body {
   font-family: "Arial";
+  background: red;
+  margin: 0px;
+  background: url('./assets/general/diving_river.jpg') no-repeat center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
-#app, #content {
+#app,
+#content {
   height: 100%;
 }
 

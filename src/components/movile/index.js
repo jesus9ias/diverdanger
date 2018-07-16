@@ -1,9 +1,6 @@
-import { renderElement, addEvent } from '../../common/global';
+import React from 'react';
+import './movile.css';
 
-const Canvas = () => {
-  renderElement('content', `<div class="movile__block">
-    <p class="movile__message">See this game with minimun 1000px of width.</p>
-  </div>`);
-};
-
-export default Canvas;
+export default () => <div className="movile">
+  <p className="movile__message">See this game with minimun 1000px of width.</p>
+</div>;

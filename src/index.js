@@ -1,17 +1,8 @@
-import { renderElement } from './common/global';
-import app from './app';
-import StartGame from './game';
-import Canvas from './components/canvas';
-import Movile from './components/movile';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
+import registerServiceWorker from './registerServiceWorker';
 
-const windowWidth = window.innerWidth;
-
-function init() {
-  renderElement('app', app(), windowWidth >= 1000 ?
-    [ Canvas, StartGame ]
-  :
-    [ Movile ]
-  );
-}
-
-init();
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();

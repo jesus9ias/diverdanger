@@ -1,4 +1,4 @@
-import Drawer from '../common/drawer';
+import Drawer from './drawer';
 
 class Shot extends Drawer {
   constructor({ context, player }) {

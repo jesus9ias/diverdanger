@@ -1,5 +1,5 @@
-import { addEvent } from '../common/global';
-import * as types from '../common/constants';
+import { addEvent } from '../../../common/global';
+import * as types from'../../../common/constants';
 import Game from './game';
 
 const game = new Game();
@@ -19,7 +19,7 @@ function cycle() {
 }
 
 addEvent(document, 'keydown', (e = window.event) => {
-  const charCode = (typeof e.which == 'number') ? e.which : e.keyCode;
+  const charCode = (typeof e.which === 'number') ? e.which : e.keyCode;
   game.onKeyDown(charCode);
 });
 
@@ -27,8 +27,9 @@ addEvent(document, 'keyup', () => {
   game.onKeyUp();
 });
 
-function startGame() {
-  game.initialize();
+function startGame(setState) {
+  //console.log(setState);
+  game.initialize(setState);
   cycle();
 }
 
