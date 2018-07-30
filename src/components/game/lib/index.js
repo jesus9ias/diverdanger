@@ -27,9 +27,9 @@ addEvent(document, 'keyup', () => {
   game.onKeyUp();
 });
 
-function startGame(setState) {
-  //console.log(setState);
-  game.initialize(setState);
+function startGame(updateScores) {
+  game.setExternalMethods({ updateScores });
+  game.initialize();
   cycle();
 }
 

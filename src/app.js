@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import Movile from './components/movile';
-import Game from './components/game';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './store/reducers';
 
-const windowWidth = window.innerWidth;
+const store = createStore(rootReducer)
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        {
-          windowWidth < 1000 ?
-            <Movile />
-          :
-            <Game />
-        }
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          {this.props.children}
+        </div>
+      </Provider>
     );
   }
 }

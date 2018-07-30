@@ -37,6 +37,11 @@ export default class Game extends Drawer {
     this.deathBubbles = deathBubbles();
     this.shots = shots();
     this.pressedKeys = pressedKeys();
+    this.externalMethods = {};
+  }
+
+  setExternalMethods(methods) {
+    this.externalMethods = methods;
   }
 
   initialize() {
@@ -297,18 +302,32 @@ export default class Game extends Drawer {
       background: 'transparent',
       borderWidth: 3,
       borderColor: '#1f364d'
-    })
-    const font = '10px Arial'
-    const color = 'white'
-    const x = 15
-    this.drawText({ context, font, text: `Time: ${this.lapse / 100}`, color, x, y: 450 });
-    this.drawText({ context, font, text: `Oxygen: ${this.player.oxygen.toFixed(2)}`, color, x, y: 461 })
-    this.drawText({ context, font, text: `Life: ${this.player.life}`, color, x, y: 472 });
-    this.drawText({ context, font, text: `Energy: ${this.player.energy}`, color, x, y: 483 });
+    });
+    const font = '10px Arial';
+    const color = 'white';
+    const x = 15;
+    const level = this.level;
+    const life = this.player.life;
+    const seconds = this.lapse / 100;
+    const energy = this.player.energy;
+    const points = this.player.points;
+    const oxygen = this.player.oxygen;
+    this.externalMethods.updateScores({
+      life,
+      level,
+      oxygen,
+      points,
+      energy,
+      seconds
+    });
+    this.drawText({ context, font, text: `Seconds: ${seconds}`, color, x, y: 450 });
+    this.drawText({ context, font, text: `Oxygen: ${oxygen.toFixed(2)}`, color, x, y: 461 })
+    this.drawText({ context, font, text: `Life: ${life}`, color, x, y: 472 });
+    this.drawText({ context, font, text: `Energy: ${energy}`, color, x, y: 483 });
   }
 
   gameChecker() {
-    console.info('Time:', this.lapse / 100);
+    console.info('Seconds:', this.lapse / 100);
     console.info('Oyigen:', this.player.oxygen);
     console.info('Life:', this.player.life);
     console.info('Energy:', this.player.energy);
