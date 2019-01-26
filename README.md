@@ -25,6 +25,6 @@ $ npm run assets:dev
 $ npm run assets:prod
 ```
 
-For dev, check localhost:8888 in your browser.
+For dev, check localhost:8181 in your browser.
 
 For production execute on local or server the dist/prod folder content

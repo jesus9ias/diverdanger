@@ -19,6 +19,7 @@ const skorpion_gun = new Audio(ray_gun);
 export default class Game extends Drawer {
   constructor() {
     super();
+    this.externalMethods = {};
     this.startValues();
     this.setStatus('initial');
   }
@@ -37,7 +38,6 @@ export default class Game extends Drawer {
     this.deathBubbles = deathBubbles();
     this.shots = shots();
     this.pressedKeys = pressedKeys();
-    this.externalMethods = {};
   }
 
   setExternalMethods(methods) {
