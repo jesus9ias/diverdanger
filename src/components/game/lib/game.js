@@ -79,6 +79,17 @@ export default class Game extends Drawer {
     }
   }
 
+  drawAir() {
+    this.drawRectangle({
+      context: this.context,
+      x: 0,
+      y: 0,
+      width: types.CANVAS_WIDTH,
+      height: this.waterBorder,
+      background: types.AIR_BACKGROUND
+    });
+  }
+
   drawWater() {
     this.drawRectangle({
       context: this.context,
@@ -105,8 +116,11 @@ export default class Game extends Drawer {
   }
 
   checkLevel() {
-    if (this.level === 1 && this.player.points >= 100) {
+    if (this.player.points >= 100 && this.player.points < 200) {
       this.setLevel(2);
+    }
+    if (this.player.points >= 200) {
+      this.setLevel(3);
     }
   }
 
@@ -149,8 +163,7 @@ export default class Game extends Drawer {
 
   bubbleAnimator() {
     let toRemove = [];
-    // eslint-disable-next-line
-    this.bubbles.map((bubble, i) => {
+    this.bubbles.forEach((bubble, i) => {
       if (this.status === types.GAME_PLAYING) {
         bubble.move();
         if(bubble.collision(this.player)) {
@@ -169,16 +182,14 @@ export default class Game extends Drawer {
       }
       bubble.draw();
     });
-    // eslint-disable-next-line
-    toRemove.map((a) => {
+    toRemove.forEach((a) => {
       this.bubbles.splice(a, 1);
     });
   }
 
   lifeBubbleAnimator() {
     let toRemove = [];
-    // eslint-disable-next-line
-    this.lifeBubbles.map((bubble, i) => {
+    this.lifeBubbles.forEach((bubble, i) => {
       if (this.status === types.GAME_PLAYING) {
         bubble.move();
         if(bubble.collision(this.player)) {
@@ -197,16 +208,14 @@ export default class Game extends Drawer {
       }
       bubble.draw();
     });
-    // eslint-disable-next-line
-    toRemove.map((a) => {
+    toRemove.forEach((a) => {
       this.lifeBubbles.splice(a, 1);
     });
   }
 
   deathBubbleAnimator() {
     let toRemove = [];
-    // eslint-disable-next-line
-    this.deathBubbles.map((bubble, i) => {
+    this.deathBubbles.forEach((bubble, i) => {
       if (this.status === types.GAME_PLAYING) {
         bubble.move();
         if(bubble.collision(this.player)) {
@@ -225,16 +234,14 @@ export default class Game extends Drawer {
       }
       bubble.draw();
     });
-    // eslint-disable-next-line
-    toRemove.map((a) => {
+    toRemove.forEach((a) => {
       this.deathBubbles.splice(a, 1);
     });
   }
 
   shotAnimator() {
     let toRemove = [];
-    // eslint-disable-next-line
-    this.shots.map((shot, i) => {
+    this.shots.forEach((shot, i) => {
       if (this.status === types.GAME_PLAYING) {
         shot.move();
         if (shot.x > types.CANVAS_WIDTH) {
@@ -243,8 +250,7 @@ export default class Game extends Drawer {
       }
       shot.draw();
     });
-    // eslint-disable-next-line
-    toRemove.map((a) => {
+    toRemove.forEach((a) => {
       this.shots.splice(a, 1);
     });
   }
@@ -291,21 +297,11 @@ export default class Game extends Drawer {
     }
   }
 
-  showInfo() {
+  drawStats() {
     const { context, status } = this;
-    this.drawRectangle({
-      context,
-      x: 10,
-      y: 440,
-      width: 100,
-      height: 50,
-      background: 'transparent',
-      borderWidth: 3,
-      borderColor: '#1f364d'
-    });
-    const font = '10px Arial';
-    const color = 'white';
-    const x = 15;
+    const font = '12px Arial';
+    const color = 'black';
+    const y = 15;
     const level = this.level;
     const life = this.player.life;
     const seconds = this.lapse / 100;
@@ -321,17 +317,12 @@ export default class Game extends Drawer {
       energy,
       seconds
     });
-    this.drawText({ context, font, text: `Seconds: ${seconds}`, color, x, y: 450 });
-    this.drawText({ context, font, text: `Oxygen: ${oxygen.toFixed(2)}`, color, x, y: 461 })
-    this.drawText({ context, font, text: `Life: ${life}`, color, x, y: 472 });
-    this.drawText({ context, font, text: `Energy: ${energy}`, color, x, y: 483 });
-  }
-
-  gameChecker() {
-    console.info('Seconds:', this.lapse / 100);
-    console.info('Oyigen:', this.player.oxygen);
-    console.info('Life:', this.player.life);
-    console.info('Energy:', this.player.energy);
+    this.drawText({ context, font, text: `Seconds: ${seconds}`, color, x: 10, y });
+    this.drawText({ context, font, text: `Oxygen: ${oxygen.toFixed(2)}`, color, x: 120, y })
+    this.drawText({ context, font, text: `Life: ${life}`, color, x: 240, y });
+    this.drawText({ context, font, text: `Energy: ${energy}`, color, x: 330, y });
+    this.drawText({ context, font, text: `Points: ${points}`, color, x: 850, y });
+    this.drawText({ context, font, text: `Level: ${level}`, color, x: 950, y });
   }
 
   checkForPause() {
@@ -358,7 +349,6 @@ export default class Game extends Drawer {
   checkForRestarting() {
     if (this.pressedKeys.indexOf(types.KEY_R) > -1 && this.status === types.GAME_STOPPED) {
       this.showedSocores = 0;
-      //  renderElement('dialogs', '');
       this.pressedKeys = pressedKeys();
       this.startValues();
       this.initialize();
@@ -378,7 +368,7 @@ export default class Game extends Drawer {
       this.deathBubbleCreator();
       this.deathBubbleAnimator();
       this.shotAnimator();
-      this.showInfo();
+      this.drawStats();
       this.playerAnimator();
       this.playerLife();
     }
@@ -387,7 +377,7 @@ export default class Game extends Drawer {
       this.lifeBubbleAnimator();
       this.deathBubbleAnimator();
       this.shotAnimator();
-      this.showInfo();
+      this.drawStats();
     }
     if (this.status === types.GAME_PAUSED || this.status === types.GAME_PLAYING) {
       this.checkForPause()
@@ -396,7 +386,7 @@ export default class Game extends Drawer {
       this.checkForStart()
     }
     if (this.status === types.GAME_STOPPED) {
-      this.showInfo();
+      this.drawStats();
       this.checkForRestarting()
     }
   }
@@ -404,49 +394,12 @@ export default class Game extends Drawer {
   gameIniting() {
     //  const { context } = this;
     if (this.status === types.GAME_INITIAL) {
-      /*this.drawRectangle({
-        context,
-        x: 350,
-        y: 190,
-        width: 300,
-        height: 100,
-        background: 'transparent',
-        borderWidth: 10,
-        borderColor: '#1f364d'
-      });
-      const font = '20px Arial';
-      const color = 'white';
-      const x = 390;
-      const y = 245;  */
-      this.showedSocores = 0;
-      //  renderElement('dialogs', '');
-      //  this.drawText({ context, font, text: 'Press i to start the game', color, x, y });
     }
   }
 
   gameStopped() {
     //  const { context } = this;
     if (this.status === types.GAME_STOPPED) {
-      /*  this.drawRectangle({
-        context,
-        x: 350,
-        y: 190,
-        width: 300,
-        height: 100,
-        background: 'transparent',
-        borderWidth: 10,
-        borderColor: '#a20d37'
-      });
-      const font = '20px Arial';
-      const color = 'white';
-      const x = 360;
-      const y = 245;
-      this.drawText({ context, font, text: 'Game ended, Press r to restart', color, x, y });  */
-      if (this.showedSocores === 0) {
-        //  const seconds = this.lapse / 100;
-        //  Scores(seconds, this.player.oxygen, this.player.life, this.player.energy, this.player.points, this.level);
-        this.showedSocores = 1;
-      }
     }
   }
 }

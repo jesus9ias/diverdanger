@@ -8,6 +8,7 @@ function cycle() {
   clearInterval(game.cycle);
 
   game.clear();
+  game.drawAir();
   game.drawWater();
   game.drawPlayer();
 

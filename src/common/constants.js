@@ -17,6 +17,8 @@ export const CANVAS_HEIGHT = 500;
 export const WATER_BORDER = 20;
 export const WATER_BACKGROUND = '#3cbff0';
 
+export const AIR_BACKGROUND = 'white';
+
 export const OXYGEN_INITIAL = 1000;
 export const ENERGY_INITIAL = 1000;
 export const LIFE_INITIAL = 1000;
