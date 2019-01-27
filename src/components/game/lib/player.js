@@ -46,7 +46,7 @@ class Player extends Drawer {
     }
     if (charCodes.indexOf(types.KEY_UP) > -1
       && charCodes.length <= 2
-      && this.y >= waterBorder - (this.height / 2)
+      && this.y >= waterBorder - (this.height / 3)
     ) {
       this.y -= this.speed;
       this.setOxygen(-0.3);

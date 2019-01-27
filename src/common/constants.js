@@ -31,3 +31,7 @@ export const GAME_INITIAL = 'initial';
 export const GAME_PLAYING = 'palying';
 export const GAME_PAUSED = 'paused';
 export const GAME_STOPPED = 'stopped';
+
+export const EPISODES = {
+  1: 'First dive'
+};

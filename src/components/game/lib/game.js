@@ -14,8 +14,6 @@ const deathBubbles = () => [];
 const shots = () => [];
 const pressedKeys = () => [];
 
-const skorpion_gun = new Audio(ray_gun);
-
 export default class Game extends Drawer {
   constructor() {
     super();
@@ -32,6 +30,7 @@ export default class Game extends Drawer {
     this.player = null;
     this.showedSocores = 0;
     this.level = 1;
+    this.episode = 1;
     this.waterBorder = types.WATER_BORDER;
     this.bubbles = bubbles();
     this.lifeBubbles = lifeBubbles();
@@ -101,7 +100,7 @@ export default class Game extends Drawer {
     });
   }
 
-  waterBottom() {
+  drawWaterBottom() {
     const { context } = this;
     this.drawRectangle({
       context,
@@ -156,7 +155,8 @@ export default class Game extends Drawer {
     //  const currentShotsLength = this.shots.length;
     const newShot = Shot({ context: this.context, player: this.player });
     if (newShot) {
-      skorpion_gun.play();
+      const showAudio = new Audio(ray_gun);
+      showAudio.play();
       this.shots.push(newShot);
     }
   }
@@ -269,7 +269,7 @@ export default class Game extends Drawer {
     if (this.player.x >= 0) {
       this.player.autoMove(-0.5, 0);
     }
-    if (this.player.y >= this.waterBorder - (this.player.height / 2)) {
+    if (this.player.y >= this.waterBorder - (this.player.height / 3)) {
       this.player.autoMove(0, -0.2);
     }
     if (this.pressedKeys.length > 0) {
@@ -360,7 +360,7 @@ export default class Game extends Drawer {
     if (this.status === types.GAME_PLAYING) {
       this.doLapse();
       this.checkLevel();
-      this.waterBottom();
+      this.drawWaterBottom();
       this.bubbleCreator();
       this.bubbleAnimator();
       this.lifeBubbleCreator();
