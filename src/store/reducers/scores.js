@@ -16,6 +16,7 @@ const reducer = (state = initialState, { type, data }) => {
         life: data.life,
         level: data.level,
         energy: data.energy,
+        status: data.status,
         points: data.points,
         oxygen: data.oxygen,
         seconds: data.seconds,

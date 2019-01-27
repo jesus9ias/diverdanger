@@ -9,5 +9,5 @@ export default ({ seconds, oxygen, life, energy, points, level }) => <div id="sc
   <p className="dialog__text">Oxygen: {oxygen.toFixed(2)}</p>
   <p className="dialog__text">Life: {life}</p>
   <p className="dialog__text">Energy: {energy}</p>
-  <p className="dialog__text">Press r to restart</p>
+  <p className="dialog__text">Game ended. Press r to restart</p>
 </div>;

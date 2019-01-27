@@ -10,13 +10,21 @@ class Game extends Component {
     MakeGame(this.props.updateScores);
   }
 
+  renderScoreDialog() {
+    console.log(this.props.scores);
+    return this.props.scores.status === 'stopped' ?
+        <div id="dialogs" className="dialogs">
+          <Scores {...this.props.scores} />
+        </div>
+      :
+        null;
+  }
+
   render() {
     return (
       <div className="game">
         <canvas id="canvas" width="1000px" height="500px" ></canvas>
-        <div id="dialogs" className="dialogs">
-          <Scores {...this.props.scores} />
-        </div>
+        {this.renderScoreDialog()}
         <img id="player" alt="player" className="canvas__image" src={player_sprite} />
       </div>
     );

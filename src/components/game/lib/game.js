@@ -1,11 +1,11 @@
-import { addRef } from '../../../common/global';
-import Drawer from './drawer';
-import * as types from'../../../common/constants';
+import Shot from './shot';
 import Bubble from './bubble';
+import Drawer from './drawer';
+import Player from './player';
 import LifeBubble from './lifeBubble';
 import DeathBubble from './deathBubble';
-import Shot from './shot';
-import Player from './player';
+import { addRef } from '../../../common/global';
+import * as types from '../../../common/constants';
 import ray_gun from '../../../assets/audio/ray_gun.mp3';
 
 const bubbles = () => [];
@@ -292,7 +292,7 @@ export default class Game extends Drawer {
   }
 
   showInfo() {
-    const { context } = this;
+    const { context, status } = this;
     this.drawRectangle({
       context,
       x: 10,
@@ -316,6 +316,7 @@ export default class Game extends Drawer {
       life,
       level,
       oxygen,
+      status,
       points,
       energy,
       seconds
@@ -395,6 +396,7 @@ export default class Game extends Drawer {
       this.checkForStart()
     }
     if (this.status === 'stopped') {
+      this.showInfo();
       this.checkForRestarting()
     }
   }
@@ -423,9 +425,9 @@ export default class Game extends Drawer {
   }
 
   gameStopped() {
-    const { context } = this;
+    //  const { context } = this;
     if (this.status === 'stopped') {
-      this.drawRectangle({
+      /*  this.drawRectangle({
         context,
         x: 350,
         y: 190,
@@ -439,9 +441,9 @@ export default class Game extends Drawer {
       const color = 'white';
       const x = 360;
       const y = 245;
-      this.drawText({ context, font, text: 'Game ended, Press r to restart', color, x, y });
+      this.drawText({ context, font, text: 'Game ended, Press r to restart', color, x, y });  */
       if (this.showedSocores === 0) {
-        console.log(this.showedSocores);
+        //  console.log(this.showedSocores);
         //  const seconds = this.lapse / 100;
         //  Scores(seconds, this.player.oxygen, this.player.life, this.player.energy, this.player.points, this.level);
         this.showedSocores = 1;
