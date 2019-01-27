@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import MakeGame from './lib'
 import './game.css';
+import MakeGame from './lib'
+import Scores from '../dialogs/scores';
+import StartGame from '../dialogs/startGame';
+import PausedGame from '../dialogs/pausedGame';
 import player_sprite from '../../assets/sprites/diver.png';
-import Scores from '../scores';
+import * as types from '../../common/constants';
 
 class Game extends Component {
 
@@ -11,13 +14,24 @@ class Game extends Component {
   }
 
   renderScoreDialog() {
-    console.log(this.props.scores);
-    return this.props.scores.status === 'stopped' ?
-        <div id="dialogs" className="dialogs">
-          <Scores {...this.props.scores} />
-        </div>
+    return this.props.scores.status === types.GAME_STOPPED ?
+        <Scores {...this.props.scores} />
       :
         null;
+  }
+
+  renderInitialDialog() {
+    return this.props.scores.status === types.GAME_INITIAL ?
+      <StartGame {...this.props.scores} />
+      :
+      null;
+  }
+
+  renderPausedDialog() {
+    return this.props.scores.status === types.GAME_PAUSED ?
+      <PausedGame {...this.props.scores} />
+      :
+      null;
   }
 
   render() {
@@ -25,6 +39,8 @@ class Game extends Component {
       <div className="game">
         <canvas id="canvas" width="1000px" height="500px" ></canvas>
         {this.renderScoreDialog()}
+        {this.renderInitialDialog()}
+        {this.renderPausedDialog()}
         <img id="player" alt="player" className="canvas__image" src={player_sprite} />
       </div>
     );

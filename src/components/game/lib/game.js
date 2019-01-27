@@ -21,7 +21,7 @@ export default class Game extends Drawer {
     super();
     this.externalMethods = {};
     this.startValues();
-    this.setStatus('initial');
+    this.setStatus(types.GAME_INITIAL);
   }
 
   startValues() {
@@ -151,7 +151,7 @@ export default class Game extends Drawer {
     let toRemove = [];
     // eslint-disable-next-line
     this.bubbles.map((bubble, i) => {
-      if (this.status === 'playing') {
+      if (this.status === types.GAME_PLAYING) {
         bubble.move();
         if(bubble.collision(this.player)) {
           this.player.setLife(-5);
@@ -179,7 +179,7 @@ export default class Game extends Drawer {
     let toRemove = [];
     // eslint-disable-next-line
     this.lifeBubbles.map((bubble, i) => {
-      if (this.status === 'playing') {
+      if (this.status === types.GAME_PLAYING) {
         bubble.move();
         if(bubble.collision(this.player)) {
           this.player.setLife(5);
@@ -207,7 +207,7 @@ export default class Game extends Drawer {
     let toRemove = [];
     // eslint-disable-next-line
     this.deathBubbles.map((bubble, i) => {
-      if (this.status === 'playing') {
+      if (this.status === types.GAME_PLAYING) {
         bubble.move();
         if(bubble.collision(this.player)) {
           this.player.setLife(-100);
@@ -235,7 +235,7 @@ export default class Game extends Drawer {
     let toRemove = [];
     // eslint-disable-next-line
     this.shots.map((shot, i) => {
-      if (this.status === 'playing') {
+      if (this.status === types.GAME_PLAYING) {
         shot.move();
         if (shot.x > types.CANVAS_WIDTH) {
           toRemove.push(i);
@@ -287,7 +287,7 @@ export default class Game extends Drawer {
 
   playerLife() {
     if (this.player.life <= 0 || this.player.oxygen <= 0) {
-      this.setStatus('stopped');
+      this.setStatus(types.GAME_STOPPED);
     }
   }
 
@@ -337,37 +337,37 @@ export default class Game extends Drawer {
   checkForPause() {
     if (this.pressedKeys.indexOf(types.KEY_P) > -1) {
       this.pressedKeys = pressedKeys();
-      if (this.status === 'playing') {
-        this.setStatus('paused');
+      if (this.status === types.GAME_PLAYING) {
+        this.setStatus(types.GAME_PAUSED);
         return null;
       }
-      if (this.status === 'paused') {
-        this.setStatus('playing');
+      if (this.status === types.GAME_PAUSED) {
+        this.setStatus(types.GAME_PLAYING);
         return null;
       }
     }
   }
 
   checkForStart() {
-    if (this.pressedKeys.indexOf(types.KEY_I) > -1 && this.status === 'initial') {
+    if (this.pressedKeys.indexOf(types.KEY_I) > -1 && this.status === types.GAME_INITIAL) {
       this.pressedKeys = pressedKeys();
-      this.setStatus('playing');
+      this.setStatus(types.GAME_PLAYING);
     }
   }
 
   checkForRestarting() {
-    if (this.pressedKeys.indexOf(types.KEY_R) > -1 && this.status === 'stopped') {
+    if (this.pressedKeys.indexOf(types.KEY_R) > -1 && this.status === types.GAME_STOPPED) {
       this.showedSocores = 0;
       //  renderElement('dialogs', '');
       this.pressedKeys = pressedKeys();
       this.startValues();
       this.initialize();
-      this.setStatus('playing');
+      this.setStatus(types.GAME_PLAYING);
     }
   }
 
   gamePlaying() {
-    if (this.status === 'playing') {
+    if (this.status === types.GAME_PLAYING) {
       this.doLapse();
       this.checkLevel();
       this.waterBottom();
@@ -382,29 +382,29 @@ export default class Game extends Drawer {
       this.playerAnimator();
       this.playerLife();
     }
-    if (this.status === 'paused') {
+    if (this.status === types.GAME_PAUSED) {
       this.bubbleAnimator();
       this.lifeBubbleAnimator();
       this.deathBubbleAnimator();
       this.shotAnimator();
       this.showInfo();
     }
-    if (this.status === 'paused' || this.status === 'playing') {
+    if (this.status === types.GAME_PAUSED || this.status === types.GAME_PLAYING) {
       this.checkForPause()
     }
-    if (this.status === 'initial') {
+    if (this.status === types.GAME_INITIAL) {
       this.checkForStart()
     }
-    if (this.status === 'stopped') {
+    if (this.status === types.GAME_STOPPED) {
       this.showInfo();
       this.checkForRestarting()
     }
   }
 
   gameIniting() {
-    const { context } = this;
-    if (this.status === 'initial') {
-      this.drawRectangle({
+    //  const { context } = this;
+    if (this.status === types.GAME_INITIAL) {
+      /*this.drawRectangle({
         context,
         x: 350,
         y: 190,
@@ -417,16 +417,16 @@ export default class Game extends Drawer {
       const font = '20px Arial';
       const color = 'white';
       const x = 390;
-      const y = 245;
+      const y = 245;  */
       this.showedSocores = 0;
       //  renderElement('dialogs', '');
-      this.drawText({ context, font, text: 'Press i to start the game', color, x, y });
+      //  this.drawText({ context, font, text: 'Press i to start the game', color, x, y });
     }
   }
 
   gameStopped() {
     //  const { context } = this;
-    if (this.status === 'stopped') {
+    if (this.status === types.GAME_STOPPED) {
       /*  this.drawRectangle({
         context,
         x: 350,
@@ -443,7 +443,6 @@ export default class Game extends Drawer {
       const y = 245;
       this.drawText({ context, font, text: 'Game ended, Press r to restart', color, x, y });  */
       if (this.showedSocores === 0) {
-        //  console.log(this.showedSocores);
         //  const seconds = this.lapse / 100;
         //  Scores(seconds, this.player.oxygen, this.player.life, this.player.energy, this.player.points, this.level);
         this.showedSocores = 1;

@@ -4,6 +4,7 @@ const initialState = {
   life: 0,
   level: 0,
   energy: 0,
+  status: 'initial',
   points: 0,
   oxygen: 0,
   seconds: 0

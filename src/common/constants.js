@@ -24,3 +24,8 @@ export const LIFE_INITIAL = 1000;
 export const OBJECT_INIT_X = 1010;
 export const OBJECT_MIN_Y = 30;
 export const OBJECT_MAX_Y = 500 - 10 -30;
+
+export const GAME_INITIAL = 'initial';
+export const GAME_PLAYING = 'palying';
+export const GAME_PAUSED = 'paused';
+export const GAME_STOPPED = 'stopped';
