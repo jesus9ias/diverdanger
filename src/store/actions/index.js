@@ -1,5 +1,5 @@
-import * as scoreActions from './scores';
+import * as statsActions from './stats';
 
 export {
-  scoreActions
+  statsActions
 };

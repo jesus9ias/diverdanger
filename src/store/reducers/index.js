@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import scores from './scores';
+import stats from './stats';
 
 export default combineReducers({
-  scores
+  stats
 });

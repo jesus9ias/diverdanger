@@ -1,5 +1,5 @@
 import Shot from './shot';
-import Bubble from './bubble';
+import CommonBubble from './commonBubble';
 import Drawer from './drawer';
 import Player from './player';
 import LifeBubble from './lifeBubble';
@@ -7,6 +7,7 @@ import DeathBubble from './deathBubble';
 import { addRef } from '../../../common/global';
 import * as types from '../../../common/constants';
 import ray_gun from '../../../assets/audio/ray_gun.mp3';
+import levelConfigs from './levelConfigs';
 
 const bubbles = () => [];
 const lifeBubbles = () => [];
@@ -28,10 +29,8 @@ export default class Game extends Drawer {
     this.cycle = null;
     this.lapse = 0;
     this.player = null;
-    this.showedSocores = 0;
-    this.level = 1;
     this.episode = 1;
-    this.waterBorder = types.WATER_BORDER;
+    this.setLevel(1);
     this.bubbles = bubbles();
     this.lifeBubbles = lifeBubbles();
     this.deathBubbles = deathBubbles();
@@ -74,7 +73,10 @@ export default class Game extends Drawer {
     if (this.player) {
       this.player.draw();
     } else {
-      this.player = Player({ context: this.context, waterBorder: this.waterBorder });
+      this.player = Player({
+        context: this.context,
+        waterBorderTop: this.levelConfig.WATER_BORDER_TOP
+      });
     }
   }
 
@@ -84,8 +86,8 @@ export default class Game extends Drawer {
       x: 0,
       y: 0,
       width: types.CANVAS_WIDTH,
-      height: this.waterBorder,
-      background: types.AIR_BACKGROUND
+      height: this.levelConfig.WATER_BORDER_TOP,
+      background: this.levelConfig.AIR_BACKGROUND
     });
   }
 
@@ -93,22 +95,22 @@ export default class Game extends Drawer {
     this.drawRectangle({
       context: this.context,
       x: 0,
-      y: this.waterBorder,
+      y: this.levelConfig.WATER_BORDER_TOP,
       width: types.CANVAS_WIDTH,
-      height: this.canvas.height - this.waterBorder,
-      background: types.WATER_BACKGROUND
+      height: this.canvas.height - this.levelConfig.WATER_BORDER_TOP,
+      background: this.levelConfig.WATER_BACKGROUND
     });
   }
 
-  drawWaterBottom() {
+  drawWaterFloor() {
     const { context } = this;
     this.drawRectangle({
       context,
       x: 0,
-      y: 495,
-      width: 1000,
-      height: 5,
-      background: 'brown',
+      y: this.canvas.height - this.levelConfig.FLOOR_BORDER_TOP,
+      width: types.CANVAS_WIDTH,
+      height: this.levelConfig.FLOOR_BORDER_TOP,
+      background: this.levelConfig.FLOOR_BACKGROUND,
       borderWidth: 0,
       borderColor: ''
     })
@@ -125,11 +127,13 @@ export default class Game extends Drawer {
 
   setLevel(level) {
     this.level = level;
+    this.levelConfig = levelConfigs[level];
   }
 
   bubbleCreator() {
     //  const currentBubblesLength = this.bubbles.length;
-    const newBubble = Bubble({ context: this.context });
+    const { context, levelConfig } = this;
+    const newBubble = CommonBubble({ context, levelConfig });
     if (newBubble) {
       this.bubbles.push(newBubble);
     }
@@ -137,7 +141,8 @@ export default class Game extends Drawer {
 
   lifeBubbleCreator() {
     //  const currentBubblesLength = this.lifeBubbles.length;
-    const newBubble = LifeBubble({ context: this.context });
+    const { context, levelConfig } = this;
+    const newBubble = LifeBubble({ context, levelConfig });
     if (newBubble) {
       this.lifeBubbles.push(newBubble);
     }
@@ -145,7 +150,8 @@ export default class Game extends Drawer {
 
   deathBubbleCreator() {
     //  const currentBubblesLength = this.deathBubbles.length;
-    const newBubble = DeathBubble({ context: this.context });
+    const { context, levelConfig } = this;
+    const newBubble = DeathBubble({ context, levelConfig });
     if (newBubble) {
       this.deathBubbles.push(newBubble);
     }
@@ -262,21 +268,21 @@ export default class Game extends Drawer {
   playerAnimator() {
     this.player.setOxygen(-0.2);
 
-    if (this.player.y < this.waterBorder) {
+    if (this.player.y < this.levelConfig.WATER_BORDER_TOP) {
       this.player.setOxygen(1.2);
     }
 
     if (this.player.x >= 0) {
       this.player.autoMove(-0.5, 0);
     }
-    if (this.player.y >= this.waterBorder - (this.player.height / 3)) {
+    if (this.player.y >= this.levelConfig.WATER_BORDER_TOP - (this.player.height / 3)) {
       this.player.autoMove(0, -0.2);
     }
     if (this.pressedKeys.length > 0) {
       if (this.player.isMoving) {
         this.player.setAnim();
       }
-      this.player.move(this.pressedKeys, this.waterBorder);
+      this.player.move(this.pressedKeys, this.levelConfig.WATER_BORDER_TOP, this.levelConfig.FLOOR_BORDER_TOP);
       const shotIndex = this.pressedKeys.indexOf(types.KEY_S)
       if (shotIndex > -1) {
         this.pressedKeys.splice(shotIndex, 1);
@@ -286,7 +292,7 @@ export default class Game extends Drawer {
         }
       }
     }
-    if (this.player.outOfPlace()) {
+    if (this.player.outOfPlace(this.levelConfig.FLOOR_BORDER_TOP)) {
       this.player.setLife(-5);
     }
   }
@@ -298,24 +304,24 @@ export default class Game extends Drawer {
   }
 
   drawStats() {
-    const { context, status } = this;
+    const { context, status, level, episode } = this;
     const font = '12px Arial';
     const color = 'black';
     const y = 15;
-    const level = this.level;
     const life = this.player.life;
     const seconds = this.lapse / 100;
     const energy = this.player.energy;
     const points = this.player.points;
     const oxygen = this.player.oxygen;
-    this.externalMethods.updateScores({
+    this.externalMethods.updateStats({
       life,
       level,
       oxygen,
       status,
       points,
       energy,
-      seconds
+      seconds,
+      episode
     });
     this.drawText({ context, font, text: `Seconds: ${seconds}`, color, x: 10, y });
     this.drawText({ context, font, text: `Oxygen: ${oxygen.toFixed(2)}`, color, x: 120, y })
@@ -348,7 +354,6 @@ export default class Game extends Drawer {
 
   checkForRestarting() {
     if (this.pressedKeys.indexOf(types.KEY_R) > -1 && this.status === types.GAME_STOPPED) {
-      this.showedSocores = 0;
       this.pressedKeys = pressedKeys();
       this.startValues();
       this.initialize();
@@ -360,7 +365,7 @@ export default class Game extends Drawer {
     if (this.status === types.GAME_PLAYING) {
       this.doLapse();
       this.checkLevel();
-      this.drawWaterBottom();
+      this.drawWaterFloor();
       this.bubbleCreator();
       this.bubbleAnimator();
       this.lifeBubbleCreator();

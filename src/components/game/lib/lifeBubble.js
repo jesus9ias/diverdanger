@@ -1,48 +1,26 @@
-import Drawer from './drawer';
+import Bubble from './bubble';
 import * as types from'../../../common/constants';
 
-class LifeBubble extends Drawer {
-  constructor({ context }) {
+class LifeBubble extends Bubble {
+  constructor({ context, levelConfig }) {
     super();
     this.context = context;
+    this.radius = Math.floor(Math.random() * 2) + 2;
+    this.maxY = types.CANVAS_HEIGHT - levelConfig.WATER_BORDER_BOTTOM - this.radius;
+    this.minY = levelConfig.WATER_BORDER_TOP + this.radius;
     this.x = types.OBJECT_INIT_X;
     this.y = Math.floor(Math.random() * types.OBJECT_MAX_Y) + types.OBJECT_MIN_Y;
-    this.radius = Math.floor(Math.random() * 2) + 2;
-    this.speed = Math.floor(Math.random() * 3) + 1;
-  }
-
-  draw() {
-    const { context, x, y, radius } = this;
-    this.drawCircle({
-      context,
-      x,
-      y,
-      radius,
-      borderWidth: 1,
-      borderColor: 'red',
-      background: 'red'
-    });
+    this.xSpeed = Math.floor(Math.random() * 3) + 1;
+    this.ySpeed = Math.floor(Math.random() * 3) + 1;
+    this.xDirection = 'left';
+    this.yDirection = null;
+    this.borderColor = 'red';
+    this.background = 'red';
+    this.canChangeDirection = false;
   }
 
   move() {
-    this.x -= this.speed;
-  }
-
-  collision(player) {
-    return this.circleCollision(player, this.x, this.y, this.radius);
-  }
-
-  shotCollision(shots) {
-    let isCollision = false;
-    // eslint-disable-next-line
-    shots.map((shot, i) => {
-      if (!isCollision) {
-        if (this.circleCollision(shot, this.x, this.y, this.radius)) {
-          isCollision = i;
-        }
-      }
-    });
-    return isCollision;
+    this.x -= this.xSpeed;
   }
 }
 

@@ -1,0 +1,32 @@
+export default {
+  1: {
+    WATER_BORDER_TOP: 20,
+    WATER_BORDER_BOTTOM: 10,
+    WATER_BACKGROUND: '#3cbff0',
+    AIR_BORDER_BOTTOM: 20,
+    AIR_BACKGROUND: 'white',
+    AIR_TYPE: 'normal',
+    FLOOR_BORDER_TOP: 10,
+    FLOOR_BACKGROUND: 'brown'
+  },
+  2: {
+    WATER_BORDER_TOP: 20,
+    WATER_BORDER_BOTTOM: 10,
+    WATER_BACKGROUND: '#3cbff0',
+    AIR_BORDER_BOTTOM: 20,
+    AIR_BACKGROUND: 'white',
+    AIR_TYPE: 'normal',
+    FLOOR_BORDER_TOP: 20,
+    FLOOR_BACKGROUND: 'brown'
+  },
+  3: {
+    WATER_BORDER_TOP: 40,
+    WATER_BORDER_BOTTOM: 10,
+    WATER_BACKGROUND: '#3cbff0',
+    AIR_BORDER_BOTTOM: 40,
+    AIR_BACKGROUND: 'white',
+    AIR_TYPE: 'normal',
+    FLOOR_BORDER_TOP: 30,
+    FLOOR_BACKGROUND: 'brown'
+  }
+}

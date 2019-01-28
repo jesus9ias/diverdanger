@@ -1,40 +1,36 @@
 import Drawer from './drawer';
-import * as types from'../../../common/constants';
 
 class Bubble extends Drawer {
-  constructor({ context }) {
-    super();
-    this.context = context;
-    this.x = types.OBJECT_INIT_X;
-    this.y = Math.floor(Math.random() * types.OBJECT_MAX_Y) + types.OBJECT_MIN_Y;
-    this.radius = Math.floor(Math.random() * 10) + 5;
-    this.xSpeed = Math.floor(Math.random() * 3) + 1;
-    this.ySpeed = Math.floor(Math.random() * 2) + 1;
-    this.xDirection = 'left';
-    this.yDirection = null;
+  changeYDirection() {
+    if (this.canChangeDirection) {
+      const random = Math.floor(Math.random() * 100) + 1;
+      if (random < 5) {
+        this.yDirection = this.yDirection === 'top' ? 'bottom' : 'top';
+      }
+      if (random >= 5 && random < 10) {
+        this.yDirection = null;
+      }
+    }
   }
 
   draw() {
-    const { context, x, y, radius } = this;
+    const {
+      context,
+      x,
+      y,
+      radius,
+      borderColor,
+      background
+    } = this;
     this.drawCircle({
       context,
       x,
       y,
       radius,
       borderWidth: 1,
-      borderColor: 'black',
-      background: 'white'
+      borderColor,
+      background
     });
-  }
-
-  changeYDirection() {
-    const random = Math.floor(Math.random() * 100) + 1;
-    if (random < 5) {
-      this.yDirection = this.yDirection === 'top' ? 'bottom' : 'top';
-    }
-    if (random >= 5 && random < 10) {
-      this.yDirection = null;
-    }
   }
 
   move() {
@@ -50,10 +46,10 @@ class Bubble extends Drawer {
     }
 
     if (this.yDirection) {
-      if (this.yDirection === 'top' && this.y > types.OBJECT_MIN_Y) {
+      if (this.yDirection === 'top' && (this.y + this.ySpeed + this.radius) > this.minY) {
         this.y -= this.ySpeed;
       }
-      if (this.yDirection === 'bottom' && this.y < types.OBJECT_MAX_Y) {
+      if (this.yDirection === 'bottom' && (this.y + this.ySpeed + this.radius) < this.maxY) {
         this.y += this.ySpeed;
       }
     }
@@ -65,8 +61,7 @@ class Bubble extends Drawer {
 
   shotCollision(shots) {
     let isCollision = false;
-    // eslint-disable-next-line
-    shots.map((shot, i) => {
+    shots.forEach((shot, i) => {
       if (!isCollision) {
         if (this.circleCollision(shot, this.x, this.y, this.radius)) {
           isCollision = i;
@@ -77,7 +72,4 @@ class Bubble extends Drawer {
   }
 }
 
-export default (data) => {
-  const random = Math.floor(Math.random() * 100) + 1;
-  return (random < 5) ? new Bubble(data) : null ;
-};
+export default Bubble;

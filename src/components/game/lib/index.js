@@ -28,8 +28,8 @@ addEvent(document, 'keyup', () => {
   game.onKeyUp();
 });
 
-function startGame(updateScores) {
-  game.setExternalMethods({ updateScores });
+function startGame(updateStats) {
+  game.setExternalMethods({ updateStats });
   game.initialize();
   cycle();
 }

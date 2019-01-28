@@ -3,7 +3,7 @@ import Dialog from '../dialog';
 
 export default ({ seconds, oxygen, life, energy, points, level }) => <Dialog>
   <div className="dialog__body">
-    <h2 className="dialog__title">Scores</h2>
+    <h2 className="dialog__title">Game Stats</h2>
     <p className="dialog__text">Reached Level: {level}</p>
     <p className="dialog__text">Points: {points}</p>
     <p className="dialog__text">Game seconds: {seconds}</p>

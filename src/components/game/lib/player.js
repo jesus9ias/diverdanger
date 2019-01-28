@@ -2,13 +2,13 @@ import Drawer from './drawer';
 import * as types from'../../../common/constants';
 
 class Player extends Drawer {
-  constructor({ context, waterBorder }) {
+  constructor({ context, waterBorderTop }) {
     super();
     this.context = context;
     this.sx = 0;
     this.sy = 0;
     this.x = 100;
-    this.y = waterBorder + 50;
+    this.y = waterBorderTop + 50;
     this.width = 36;
     this.height = 36;
     this.speed = 5;
@@ -37,7 +37,7 @@ class Player extends Drawer {
     });
   }
 
-  move(charCodes, waterBorder) {
+  move(charCodes, waterBorderTop, floorBorderTop) {
     if (charCodes.indexOf(types.KEY_LEFT) > -1
       && charCodes.length <= 2
       && this.x >= 0
@@ -46,7 +46,7 @@ class Player extends Drawer {
     }
     if (charCodes.indexOf(types.KEY_UP) > -1
       && charCodes.length <= 2
-      && this.y >= waterBorder - (this.height / 3)
+      && this.y >= waterBorderTop - (this.height / 3)
     ) {
       this.y -= this.speed;
       this.setOxygen(-0.3);
@@ -60,7 +60,7 @@ class Player extends Drawer {
     }
     if (charCodes.indexOf(types.KEY_DOWN) > -1
       && charCodes.length <= 2
-      && this.y <= types.CANVAS_HEIGHT - this.height
+      && this.y <= types.CANVAS_HEIGHT - floorBorderTop - (this.height / 2)
     ) {
       this.y += this.speed;
       this.setOxygen(-0.3);
@@ -82,10 +82,10 @@ class Player extends Drawer {
     this.y += y;
   }
 
-  outOfPlace() {
+  outOfPlace(floorBorderTop) {
     if (this.x < 0
       || this.x > types.CANVAS_WIDTH - this.width
-      || this.y > types.CANVAS_HEIGHT - this.height
+      || this.y > types.CANVAS_HEIGHT - this.height - floorBorderTop
     ) {
       return true;
     }

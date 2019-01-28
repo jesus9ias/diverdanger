@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import Game from './game';
-import { scoreActions } from '../../store/actions';
+import { statsActions } from '../../store/actions';
 
 const mapStateToProps = state => ({
-  scores: state.scores
+  stats: state.stats
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateScores: data => dispatch(scoreActions.updateScores(data))
+  updateStats: data => dispatch(statsActions.updateStats(data))
 });
 
 export default connect(
